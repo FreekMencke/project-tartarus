@@ -3,7 +3,6 @@ package io.codecomet.project_tartarus.managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 import java.util.HashMap;
 
@@ -13,20 +12,15 @@ enum FontType {
 
 public class FontManager {
 
-    private static FontManager instance = null;
-
     private final HashMap<FontType, HashMap<Integer, BitmapFont>> fontCache = new HashMap<>();
-
     private final FreeTypeFontGenerator defaultFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/YoungSerif-Regular.ttf"));
 
-    private FontManager() {
-        fontCache.put(FontType.DefaultFont, new HashMap<Integer, BitmapFont>());
-    }
-
+    private static FontManager instance = null;
     public static FontManager getInstance() {
-        if (instance == null) instance = new FontManager();
-
-        return instance;
+        return instance == null ? instance = new FontManager() : instance;
+    }
+    private FontManager() {
+        fontCache.put(FontType.DefaultFont, new HashMap<>());
     }
 
     public BitmapFont getDefaultFont(int size) {
@@ -34,7 +28,7 @@ public class FontManager {
             return fontCache.get(FontType.DefaultFont).get(size);
         }
 
-        FreeTypeFontParameter parameters = new FreeTypeFontParameter();
+        FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameters.size = size;
 
         BitmapFont font = defaultFontGenerator.generateFont(parameters);
