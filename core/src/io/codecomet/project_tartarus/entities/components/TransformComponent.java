@@ -9,13 +9,11 @@ public class TransformComponent implements Component, Pool.Poolable {
     public final Vector3 position = new Vector3();
     public final Vector2 scale = new Vector2(1.0f, 1.0f);
     public float rotation = 0.0f;
-    public boolean isHidden = false;
 
     @Override
     public void reset() {
         position.set(0f, 0f, 0f);
         scale.set(1.0f, 1.0f);
         rotation = 0.0f;
-        isHidden = false;
     }
 }

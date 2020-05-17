@@ -26,7 +26,7 @@ class ZComparator implements Comparator<Entity> {
 
 public class RenderingSystem extends SortedIteratingSystem {
 
-    static final float PIXELS_PER_METER = 16.0f;
+    static final float PIXELS_PER_METER = 128.0f; // TODO: MAKE DEFAULT + ADD ZOOM
     static final float PIXELS_TO_METRES = 1.0f / PIXELS_PER_METER;
 
     private final SpriteBatch batch;
@@ -60,7 +60,7 @@ public class RenderingSystem extends SortedIteratingSystem {
         TextureComponent texture = textureMap.get(entity);
         TransformComponent transform = transformMap.get(entity);
 
-        if (texture.region == null || transform.isHidden) {
+        if (texture.region == null) {
             return;
         }
 

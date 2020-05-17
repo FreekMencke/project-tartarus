@@ -18,13 +18,12 @@ public class Amphitheatre extends Stage {
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
     private final Table content = new Table();
-    private final NerdStatistics nerdStatistics = new NerdStatistics();
 
     public Amphitheatre() {
-        this(new SpriteBatch());
+        this(new SpriteBatch(), new NerdStatistics());
     }
 
-    public Amphitheatre(Batch batch) {
+    public Amphitheatre(Batch batch, NerdStatistics nerdStatistics) {
         super(new ScreenViewport(), batch);
 
         subscriptions.add(ProjectTartarus.config.subscribe(config -> setDebugAll(config.debug)));
@@ -37,8 +36,6 @@ public class Amphitheatre extends Stage {
     @Override
     public void dispose() {
         super.dispose();
-
-        nerdStatistics.dispose();
         subscriptions.dispose();
     }
 

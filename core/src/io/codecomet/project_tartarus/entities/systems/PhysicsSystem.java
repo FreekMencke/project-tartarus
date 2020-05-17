@@ -38,12 +38,14 @@ public class PhysicsSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        TransformComponent tfm = transformMap.get(entity);
+        TransformComponent transformComponent = transformMap.get(entity);
         BodyComponent bodyComp = bodyMap.get(entity);
+
         Vector2 position = bodyComp.body.getPosition();
-        tfm.position.x = position.x;
-        tfm.position.y = position.y;
-        tfm.rotation = bodyComp.body.getAngle() * MathUtils.radiansToDegrees;
+        transformComponent.position.x = position.x;
+        transformComponent.position.y = position.y;
+
+        transformComponent.rotation = bodyComp.body.getAngle() * MathUtils.radiansToDegrees;
     }
 
 }

@@ -1,11 +1,11 @@
-package io.codecomet.project_tartarus.debug;
+package io.codecomet.project_tartarus.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import io.codecomet.project_tartarus.GameConfig;
 import io.codecomet.project_tartarus.ProjectTartarus;
 
-public class ShortcutConfigInputAdapter extends InputAdapter {
+public class SystemInputAdapter extends InputAdapter {
 
     @Override
     public boolean keyUp(int keycode) {
@@ -17,7 +17,7 @@ public class ShortcutConfigInputAdapter extends InputAdapter {
             return true;
         }
         if (keycode == Input.Keys.F7) {
-            nextConfig.fpsCounter = !nextConfig.fpsCounter;
+            nextConfig.nerdStatistics = !nextConfig.nerdStatistics;
             ProjectTartarus.config.onNext(nextConfig);
             return true;
         }

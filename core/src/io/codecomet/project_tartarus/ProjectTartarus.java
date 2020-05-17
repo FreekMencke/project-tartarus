@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
-import io.codecomet.project_tartarus.debug.ShortcutConfigInputAdapter;
+import io.codecomet.project_tartarus.input.SystemInputAdapter;
 import io.codecomet.project_tartarus.screens.MenuScreen;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
@@ -15,7 +15,7 @@ public class ProjectTartarus extends Game {
 	@Override
 	public void create() {
 		Gdx.input.setInputProcessor(new InputMultiplexer());
-		ProjectTartarus.addInputProcessor(new ShortcutConfigInputAdapter());
+		ProjectTartarus.addInputProcessor(new SystemInputAdapter());
 
 		this.setScreen(new MenuScreen());
 	}
