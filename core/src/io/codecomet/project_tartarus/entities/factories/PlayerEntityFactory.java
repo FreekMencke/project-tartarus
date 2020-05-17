@@ -8,11 +8,11 @@ import io.codecomet.project_tartarus.entities.components.*;
 public class PlayerEntityFactory {
 
     public static Entity create(PooledEngine engine, World world) {
-        SpeedComponent speedComponent = engine.createComponent(SpeedComponent.class);
-        speedComponent.speed.set(3, 3); // TODO: default player speed.
+        VelocityComponent velocityComponent = engine.createComponent(VelocityComponent.class);
+        velocityComponent.speed.set(3, 3); // TODO: default player speed.
 
         return engine.createEntity()
-            .add(speedComponent)
+            .add(velocityComponent)
             .add(createBodyComponent(engine, world))
             .add(engine.createComponent(ControllerComponent.class))
             .add(engine.createComponent(TransformComponent.class))
@@ -46,7 +46,7 @@ public class PlayerEntityFactory {
 
     private static void addShouldersFixture(Body body) {
         PolygonShape shouldersShape = new PolygonShape();
-        shouldersShape.setAsBox(.4f, .10f); // TODO: default player shoulder size.
+        shouldersShape.setAsBox(.42f, .12f); // TODO: default player shoulder size.
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shouldersShape;

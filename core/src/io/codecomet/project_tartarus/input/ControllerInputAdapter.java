@@ -38,4 +38,37 @@ public class ControllerInputAdapter extends InputAdapter {
         return super.keyDown(keycode);
     }
 
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        ImmutableArray<Entity> entities = engine.getEntitiesFor(family);
+
+        entities.forEach(e -> updateMousePosition(e, screenX, screenY, true));
+
+        return super.touchDragged(screenX, screenY, pointer);
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        ImmutableArray<Entity> entities = engine.getEntitiesFor(family);
+
+        entities.forEach(e -> updateMousePosition(e, screenX, screenY, true));
+
+        return super.touchDown(screenX, screenY, pointer, button);
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        ImmutableArray<Entity> entities = engine.getEntitiesFor(family);
+
+        entities.forEach(e -> updateMousePosition(e, screenX, screenY, false));
+
+        return super.touchUp(screenX, screenY, pointer, button);
+    }
+
+    private void updateMousePosition(Entity e, float x, float y, boolean isTouching) {
+        ControllerComponent c = controllerMap.get(e);
+        c.touchPosition.set(x, y);
+        c.isTouching = isTouching;
+    }
+
 }

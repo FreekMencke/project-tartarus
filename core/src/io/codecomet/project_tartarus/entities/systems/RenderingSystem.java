@@ -40,7 +40,8 @@ public class RenderingSystem extends SortedIteratingSystem {
 
         this.batch = batch;
 
-        camera.setToOrtho(false, Gdx.graphics.getWidth() / PIXELS_PER_METER, Gdx.graphics.getHeight() / PIXELS_PER_METER);
+        camera.viewportWidth = Gdx.graphics.getWidth() / PIXELS_PER_METER;
+        camera.viewportHeight = Gdx.graphics.getHeight() / PIXELS_PER_METER;
     }
 
     @Override

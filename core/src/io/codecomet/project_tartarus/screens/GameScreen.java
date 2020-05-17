@@ -35,7 +35,7 @@ public class GameScreen implements Screen {
     public GameScreen() {
         engine.addSystem(renderingSystem);
         engine.addSystem(new PhysicsSystem(world));
-        engine.addSystem(new ControllerMovementSystem());
+        engine.addSystem(new ControllerMovementSystem(renderingSystem.getCamera()));
 
         subscriptions.add(
             ProjectTartarus.config.subscribe(config -> {
