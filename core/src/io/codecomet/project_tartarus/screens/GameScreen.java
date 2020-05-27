@@ -50,6 +50,7 @@ public class GameScreen implements Screen {
         ProjectTartarus.addInputProcessor(amphitheatre);
         ProjectTartarus.addInputProcessor(controllerInputAdapter);
 
+        // CREATE PLAYER
         engine.addEntity(PlayerEntityFactory.create(engine, world));
     }
 

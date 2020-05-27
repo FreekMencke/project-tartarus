@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -38,42 +37,32 @@ public class ControllerMovementSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         Body body = bodyMap.get(entity).body;
         ControllerComponent controller = controllerMap.get(entity);
+        VelocityComponent velocity = velocityMap.get(entity);
 
-        // TODO: make configurable keymap
-        boolean up = controller.keysPressed.getOrDefault(Input.Keys.W, false);
-        boolean right = controller.keysPressed.getOrDefault(Input.Keys.D, false);
-        boolean down = controller.keysPressed.getOrDefault(Input.Keys.S, false);
-        boolean left = controller.keysPressed.getOrDefault(Input.Keys.A, false);
+        Vector2 direction = controller.direction.cpy();
 
-        applyVelocityToBody(up, right, down, left, body, velocityMap.get(entity));
+        applyVelocityToBody(body, direction, velocity);
 
-        rotateBodyToCursor(body, controller);
+        if (controller.isTouching) rotateBodyToCursor(body, controller);
+        else rotateToDirection(body, direction);
     }
 
-    private void applyVelocityToBody(boolean up, boolean right, boolean down, boolean left, Body body, VelocityComponent velocity) {
-        // DETERMINE VELOCITY
-        float xSpeed = body.getLinearVelocity().x;
-        float ySpeed = body.getLinearVelocity().y;
+    private void applyVelocityToBody(Body body, Vector2 direction, VelocityComponent velocity) {
+        Vector2 linearVelocity = new Vector2();
 
-        if (left && !right) xSpeed = -velocity.speed.x;
-        else if (right && !left) xSpeed = velocity.speed.x;
-
-        if (up && !down) ySpeed = velocity.speed.y;
-        else if (down && !up) ySpeed = -velocity.speed.y;
-
-        if ((up || down) && (left || right)) {
-            xSpeed = (float) Math.sqrt(Math.pow(xSpeed, 2) / 2) * Math.signum(xSpeed);
-            ySpeed = (float) Math.sqrt(Math.pow(ySpeed, 2) / 2) * Math.signum(ySpeed);
+        if (direction.x != 0 && direction.y != 0) {
+            Vector2 diagonalVelocity = new Vector2((float) Math.sqrt(Math.pow(velocity.speed.x, 2) / 2), (float) Math.sqrt(Math.pow(velocity.speed.y, 2) / 2));
+            linearVelocity.set(direction.scl(diagonalVelocity));
+        } else {
+            linearVelocity.set(direction.scl(velocity.speed));
         }
 
         // APPLY VELOCITY TO BODY
-        body.setLinearVelocity(xSpeed, ySpeed);
+        body.setLinearVelocity(linearVelocity);
         body.setLinearDamping(velocity.dampening);
     }
 
     private void rotateBodyToCursor(Body body, ControllerComponent controller) {
-        if (!controller.isTouching) return;
-
         Vector2 bodyWorldPosition = body.getPosition();
         Vector3 mouseWorldPosition = camera.unproject(new Vector3(controller.touchPosition, 0));
 
@@ -85,6 +74,12 @@ public class ControllerMovementSystem extends IteratingSystem {
         if (angle < 0) angle += 360 * MathUtils.degRad;
 
         body.setTransform(bodyWorldPosition, angle);
+    }
+
+    private void rotateToDirection(Body body, Vector2 direction) {
+        if (direction.equals(Vector2.Zero)) return;
+
+        body.setTransform(body.getPosition(), (direction.angle() * MathUtils.degRad) + ANGLE_OFFSET);
     }
 
 }

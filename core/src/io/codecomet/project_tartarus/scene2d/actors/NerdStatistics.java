@@ -33,7 +33,6 @@ public class NerdStatistics extends Table {
     private final ComponentMapper<TransformComponent> transformMap = ComponentMapper.getFor(TransformComponent.class);
 
     public NerdStatistics() {
-        super();
         this.engine = null;
         this.playerFamily = null;
 
@@ -41,9 +40,8 @@ public class NerdStatistics extends Table {
     }
 
     public NerdStatistics(PooledEngine engine) {
-        super();
         this.engine = engine;
-        playerFamily = Family.all(PlayerComponent.class, TransformComponent.class).get();
+        playerFamily = Family.all(PlayerComponent.class).get();
 
         this.init();
     }
@@ -65,15 +63,16 @@ public class NerdStatistics extends Table {
     public void act(float delta) {
         super.act(delta);
 
-        DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT_STR);
-
         fpsLabel.setText(MessageFormat.format("FPS: {0} ", Gdx.graphics.getFramesPerSecond()));
 
         if (this.engine == null) return;
+
         ImmutableArray<Entity> entities = engine.getEntitiesFor(playerFamily);
         if(entities.size() == 0) return;
 
+        DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT_STR);
         TransformComponent transformComponent = transformMap.get(entities.first());
+
         positionLabel.setText(
             MessageFormat.format(
                 "Transform: (x: {0}, y: {1}, rot: {2}°) ",
