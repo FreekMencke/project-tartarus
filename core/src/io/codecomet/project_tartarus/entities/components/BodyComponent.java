@@ -10,7 +10,7 @@ public class BodyComponent implements Component, Pool.Poolable {
 
     @Override
     public void reset() {
-          body = null;
+        body = null;
     }
 
 }

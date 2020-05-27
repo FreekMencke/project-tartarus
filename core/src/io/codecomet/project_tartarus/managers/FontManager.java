@@ -19,9 +19,11 @@ public class FontManager {
     private final FreeTypeFontGenerator systemFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/LiberationMono-Regular.ttf"));
 
     private static FontManager instance = null;
+
     public static FontManager getInstance() {
         return instance == null ? instance = new FontManager() : instance;
     }
+
     private FontManager() {
         fontCache.put(FontType.DefaultFont, new HashMap<>());
         fontCache.put(FontType.SystemFont, new HashMap<>());

@@ -26,7 +26,6 @@ public class NerdStatistics extends Table {
 
     private Label fpsLabel;
     private Label positionLabel;
-    private Label rotationLabel;
 
     private final PooledEngine engine;
     private final Family playerFamily;
@@ -53,7 +52,6 @@ public class NerdStatistics extends Table {
 
         fpsLabel = new Label("", SystemSkin.getInstance());
         positionLabel = new Label("", SystemSkin.getInstance());
-        rotationLabel = new Label("", SystemSkin.getInstance());
 
         add(fpsLabel).fillX().row();
         add(positionLabel).fillX().row();
@@ -68,7 +66,7 @@ public class NerdStatistics extends Table {
         if (this.engine == null) return;
 
         ImmutableArray<Entity> entities = engine.getEntitiesFor(playerFamily);
-        if(entities.size() == 0) return;
+        if (entities.size() == 0) return;
 
         DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT_STR);
         TransformComponent transformComponent = transformMap.get(entities.first());

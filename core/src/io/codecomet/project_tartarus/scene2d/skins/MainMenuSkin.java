@@ -11,9 +11,11 @@ import io.codecomet.project_tartarus.managers.FontManager;
 public class MainMenuSkin extends Skin {
 
     private static MainMenuSkin instance = null;
+
     public static MainMenuSkin getInstance() {
         return instance == null ? instance = new MainMenuSkin() : instance;
     }
+
     private MainMenuSkin() {
         this.buildSkin();
     }

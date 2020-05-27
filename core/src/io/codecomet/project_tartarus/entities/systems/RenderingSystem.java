@@ -19,7 +19,7 @@ class ZComparator implements Comparator<Entity> {
     public int compare(Entity entityA, Entity entityB) {
         return (int) Math.signum(
             transformMap.get(entityB).position.z -
-            transformMap.get(entityA).position.z
+                transformMap.get(entityA).position.z
         );
     }
 }
@@ -68,8 +68,8 @@ public class RenderingSystem extends SortedIteratingSystem {
         float width = texture.region.getRegionWidth();
         float height = texture.region.getRegionHeight();
 
-        float originX = width/2f;
-        float originY = height/2f;
+        float originX = width / 2f;
+        float originY = height / 2f;
 
         batch.draw(texture.region,
             transform.position.x - originX, transform.position.y - originY,

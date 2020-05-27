@@ -12,7 +12,7 @@ import io.codecomet.project_tartarus.entities.components.TransformComponent;
 
 public class PhysicsSystem extends IteratingSystem {
 
-    private static final float MAX_STEP_TIME = 1/60f;
+    private static final float MAX_STEP_TIME = 1 / 60f;
     private static float accumulator = 0f;
 
     private final World world;
@@ -29,7 +29,7 @@ public class PhysicsSystem extends IteratingSystem {
     public void update(float deltaTime) {
         accumulator += deltaTime;
 
-        if(accumulator >= MAX_STEP_TIME) {
+        if (accumulator >= MAX_STEP_TIME) {
             world.step(MAX_STEP_TIME, 8, 3);
             super.update(MAX_STEP_TIME);
             accumulator -= MAX_STEP_TIME;

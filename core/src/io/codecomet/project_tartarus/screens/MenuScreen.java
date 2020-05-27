@@ -36,8 +36,11 @@ public class MenuScreen implements Screen {
         amphitheatre.resize(width, height);
     }
 
-    @Override public void pause() { }
-    @Override public void resume() { }
+    @Override
+    public void pause() { }
+
+    @Override
+    public void resume() { }
 
     @Override
     public void hide() {

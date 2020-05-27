@@ -7,9 +7,11 @@ import io.codecomet.project_tartarus.managers.FontManager;
 public class SystemSkin extends Skin {
 
     private static SystemSkin instance = null;
+
     public static SystemSkin getInstance() {
         return instance == null ? instance = new SystemSkin() : instance;
     }
+
     private SystemSkin() {
         this.buildSkin();
     }
