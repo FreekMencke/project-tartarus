@@ -48,18 +48,15 @@ public class ControllerMovementSystem extends IteratingSystem {
     }
 
     private void applyVelocityToBody(Body body, Vector2 direction, VelocityComponent velocity) {
-        Vector2 linearVelocity = new Vector2();
+        body.setLinearDamping(velocity.speedDampening);
 
-        if (direction.x != 0 && direction.y != 0) {
-            Vector2 diagonalVelocity = new Vector2((float) Math.sqrt(Math.pow(velocity.speed.x, 2) / 2), (float) Math.sqrt(Math.pow(velocity.speed.y, 2) / 2));
-            linearVelocity.set(direction.scl(diagonalVelocity));
-        } else {
-            linearVelocity.set(direction.scl(velocity.speed));
-        }
+        if (direction.isZero()) return;
+
+        Vector2 linearVelocity = new Vector2(0, velocity.speed);
+        linearVelocity.rotate(new Vector2(direction).rotate90(-1).angle());
 
         // APPLY VELOCITY TO BODY
         body.setLinearVelocity(linearVelocity);
-        body.setLinearDamping(velocity.dampening);
     }
 
     private void rotateBodyToCursor(Body body, ControllerComponent controller) {
@@ -67,11 +64,7 @@ public class ControllerMovementSystem extends IteratingSystem {
         Vector3 mouseWorldPosition = camera.unproject(new Vector3(controller.touchPosition, 0));
 
         // CALCULATE ANGLE WITH X-AXIS
-        float angle = MathUtils.atan2(mouseWorldPosition.y - bodyWorldPosition.y, mouseWorldPosition.x - bodyWorldPosition.x);
-        // CALCULATE ANGLE WITH Y-AXIS
-        angle += ANGLE_OFFSET;
-        // FIX ANGLE RANGE FROM 0-2PI
-        if (angle < 0) angle += 360 * MathUtils.degRad;
+        float angle = new Vector2(mouseWorldPosition.x - bodyWorldPosition.x, mouseWorldPosition.y -bodyWorldPosition.y).rotate90(-1).angle() * MathUtils.degRad;
 
         body.setTransform(bodyWorldPosition, angle);
     }

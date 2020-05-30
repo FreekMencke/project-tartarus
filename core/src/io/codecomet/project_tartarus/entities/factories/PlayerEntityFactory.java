@@ -2,18 +2,19 @@ package io.codecomet.project_tartarus.entities.factories;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import io.codecomet.project_tartarus.entities.components.*;
 
 public class PlayerEntityFactory {
 
-    public static Entity create(PooledEngine engine, World world) {
-        VelocityComponent velocityComponent = engine.createComponent(VelocityComponent.class);
-        velocityComponent.speed.set(3, 3); // TODO: default player speed.
+    public static final float HEAD_RADIUS = .12f; // 12cm
+    public static final Vector2 SHOULDERS = new Vector2(.2f, .06f); // half-values: 40cm x 12cm
 
+    public static Entity create(PooledEngine engine, World world) {
         return engine.createEntity()
-            .add(velocityComponent)
             .add(createBodyComponent(engine, world))
+            .add(engine.createComponent(VelocityComponent.class))
             .add(engine.createComponent(ControllerComponent.class))
             .add(engine.createComponent(TransformComponent.class))
             .add(engine.createComponent(PlayerComponent.class));
@@ -35,7 +36,7 @@ public class PlayerEntityFactory {
 
     private static void addHeadFixture(Body body) {
         CircleShape headShape = new CircleShape();
-        headShape.setRadius(.25f); // TODO: default player head size.
+        headShape.setRadius(HEAD_RADIUS);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = headShape;
@@ -46,7 +47,7 @@ public class PlayerEntityFactory {
 
     private static void addShouldersFixture(Body body) {
         PolygonShape shouldersShape = new PolygonShape();
-        shouldersShape.setAsBox(.42f, .12f); // TODO: default player shoulder size.
+        shouldersShape.setAsBox(SHOULDERS.x, SHOULDERS.y);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shouldersShape;

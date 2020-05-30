@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import io.codecomet.project_tartarus.GameConfig;
 import io.codecomet.project_tartarus.ProjectTartarus;
+import io.codecomet.project_tartarus.config.GameConfiguration;
 import io.codecomet.project_tartarus.scene2d.skins.MainMenuSkin;
 import io.codecomet.project_tartarus.screens.GameScreen;
 
@@ -22,7 +22,7 @@ public class MainMenu extends Table {
     }
 
     private void addTitle() {
-        Label titleLabel = new Label(GameConfig.GAME_TITLE, MainMenuSkin.getInstance(), "title");
+        Label titleLabel = new Label(GameConfiguration.Defaults.GAME_TITLE, MainMenuSkin.getInstance(), "title");
         add(titleLabel).spaceBottom(50).row();
     }
 

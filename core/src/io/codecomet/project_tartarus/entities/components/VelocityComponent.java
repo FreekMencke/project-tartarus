@@ -1,18 +1,20 @@
 package io.codecomet.project_tartarus.entities.components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 
 public class VelocityComponent implements Component, Pool.Poolable {
 
-    public float dampening = 10; // TODO: default velocity dampening.
-    public Vector2 speed = new Vector2();
+    public static final float DEFAULT_SPEED = 2;  // 2m/s => 7.2km/h
+    public static final float DEFAULT_SPEED_DAMPENING = 10; // 10m/s
+
+    public float speedDampening = DEFAULT_SPEED_DAMPENING;
+    public float speed = DEFAULT_SPEED;
 
     @Override
     public void reset() {
-        dampening = 10; // TODO: default velocity dampening.
-        speed.set(0, 0);
+        speedDampening = DEFAULT_SPEED_DAMPENING;
+        speed = DEFAULT_SPEED;
     }
 
 }

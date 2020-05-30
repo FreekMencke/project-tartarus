@@ -5,10 +5,12 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
+import io.codecomet.project_tartarus.ProjectTartarus;
+import io.codecomet.project_tartarus.config.GameConfiguration;
+import io.codecomet.project_tartarus.config.KeyBindings;
 import io.codecomet.project_tartarus.entities.components.ControllerComponent;
 
 public class ControllerInputAdapter extends InputAdapter {
@@ -78,15 +80,15 @@ public class ControllerInputAdapter extends InputAdapter {
     }
 
     private void updateDirection(Entity e) {
+        GameConfiguration.Configuration config = ProjectTartarus.config.getValue();
         ControllerComponent c = controllerMap.get(e);
 
         Vector2 direction = new Vector2();
 
-        // TODO: make configurable keymap
-        if (keysPressed.get(Input.Keys.W, false)) direction.add(0, 1);
-        if (keysPressed.get(Input.Keys.D, false)) direction.add(1, 0);
-        if (keysPressed.get(Input.Keys.S, false)) direction.sub(0, 1);
-        if (keysPressed.get(Input.Keys.A, false)) direction.sub(1, 0);
+        if (keysPressed.get(config.keyMap.get(KeyBindings.Action.UP), false)) direction.add(0, 1);
+        if (keysPressed.get(config.keyMap.get(KeyBindings.Action.RIGHT), false)) direction.add(1, 0);
+        if (keysPressed.get(config.keyMap.get(KeyBindings.Action.DOWN), false)) direction.sub(0, 1);
+        if (keysPressed.get(config.keyMap.get(KeyBindings.Action.LEFT), false)) direction.sub(1, 0);
 
         c.direction.set(direction);
     }
