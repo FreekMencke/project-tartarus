@@ -12,12 +12,14 @@ public class PlayerEntityFactory {
     public static final Vector2 SHOULDERS = new Vector2(.2f, .06f); // half-values: 40cm x 12cm
 
     public static Entity create(PooledEngine engine, World world) {
+        System.out.println("CREATE PLAYER");
         return engine.createEntity()
             .add(createBodyComponent(engine, world))
-            .add(engine.createComponent(VelocityComponent.class))
+            .add(engine.createComponent(CameraComponent.class))
             .add(engine.createComponent(ControllerComponent.class))
             .add(engine.createComponent(TransformComponent.class))
-            .add(engine.createComponent(PlayerComponent.class));
+            .add(engine.createComponent(PlayerComponent.class))
+            .add(engine.createComponent(VelocityComponent.class));
     }
 
     private static BodyComponent createBodyComponent(PooledEngine engine, World world) {

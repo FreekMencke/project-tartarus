@@ -39,7 +39,7 @@ public class ControllerMovementSystem extends IteratingSystem {
         ControllerComponent controller = controllerMap.get(entity);
         VelocityComponent velocity = velocityMap.get(entity);
 
-        Vector2 direction = controller.direction.cpy();
+        Vector2 direction = new Vector2(controller.direction);
 
         applyVelocityToBody(body, direction, velocity);
 
@@ -63,8 +63,8 @@ public class ControllerMovementSystem extends IteratingSystem {
         Vector2 bodyWorldPosition = body.getPosition();
         Vector3 mouseWorldPosition = camera.unproject(new Vector3(controller.touchPosition, 0));
 
-        // CALCULATE ANGLE WITH X-AXIS
-        float angle = new Vector2(mouseWorldPosition.x - bodyWorldPosition.x, mouseWorldPosition.y -bodyWorldPosition.y).rotate90(-1).angle() * MathUtils.degRad;
+        Vector2 relativeMousePosition = new Vector2(mouseWorldPosition.x - bodyWorldPosition.x, mouseWorldPosition.y -bodyWorldPosition.y);
+        float angle = relativeMousePosition.rotate90(-1).angle() * MathUtils.degRad;
 
         body.setTransform(bodyWorldPosition, angle);
     }

@@ -26,6 +26,7 @@ public class NerdStatistics extends Table {
 
     private Label fpsLabel;
     private Label positionLabel;
+    private Label entityLabel;
 
     private final PooledEngine engine;
     private final Family playerFamily;
@@ -50,35 +51,41 @@ public class NerdStatistics extends Table {
         align(Align.topLeft);
         pad(OFFSET);
 
-        fpsLabel = new Label("", SystemSkin.getInstance());
-        positionLabel = new Label("", SystemSkin.getInstance());
-
-        add(fpsLabel).fillX().row();
-        add(positionLabel).fillX().row();
+        add(fpsLabel = new Label("", SystemSkin.getInstance())).fillX().row();
+        add(positionLabel = new Label("", SystemSkin.getInstance())).fillX().row();
+        add(entityLabel = new Label("", SystemSkin.getInstance())).fillX().row();
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
+        // DON'T UPDATE IF NERD_STATISTICS ARE DISABLED
+        if (!ProjectTartarus.config.getValue().nerdStatistics) return;
 
+        // UPDATE FPS LABEL
         fpsLabel.setText(MessageFormat.format("FPS: {0} ", Gdx.graphics.getFramesPerSecond()));
 
+        // ENGINE SPECIFIC LABELS BELOW THIS POINT
         if (this.engine == null) return;
 
         ImmutableArray<Entity> entities = engine.getEntitiesFor(playerFamily);
-        if (entities.size() == 0) return;
+        // UPDATE PLAYER TRANSFORM
+        if (entities.size() != 0) {
+            DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT_STR);
+            TransformComponent transformComponent = transformMap.get(entities.first());
 
-        DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT_STR);
-        TransformComponent transformComponent = transformMap.get(entities.first());
+            positionLabel.setText(
+                MessageFormat.format(
+                    "Transform: (x: {0}, y: {1}, rot: {2}°) ",
+                    decimalFormat.format(transformComponent.position.x),
+                    decimalFormat.format(transformComponent.position.y),
+                    decimalFormat.format(transformComponent.rotation)
+                )
+            );
+        }
 
-        positionLabel.setText(
-            MessageFormat.format(
-                "Transform: (x: {0}, y: {1}, rot: {2}°) ",
-                decimalFormat.format(transformComponent.position.x),
-                decimalFormat.format(transformComponent.position.y),
-                decimalFormat.format(transformComponent.rotation)
-            )
-        );
+        // UPDATE ENTITY INFORMATION
+        entityLabel.setText(MessageFormat.format("Entities: {0} ({1} systems)", engine.getEntities().size(), engine.getSystems().size()));
     }
 
     @Override

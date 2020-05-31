@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 public interface KeyBindings {
 
     class Action {
-        // MOVEMENT
+        // CHARACTER MOVEMENT
         public static final String UP = "UP";
         public static final String RIGHT = "RIGHT";
         public static final String DOWN = "DOWN";

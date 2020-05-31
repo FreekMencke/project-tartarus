@@ -4,15 +4,16 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import io.codecomet.project_tartarus.ProjectTartarus;
+import io.codecomet.project_tartarus.entities.components.TextureComponent;
+import io.codecomet.project_tartarus.entities.components.TransformComponent;
 import io.codecomet.project_tartarus.entities.factories.PlayerEntityFactory;
-import io.codecomet.project_tartarus.entities.systems.ControllerMovementSystem;
-import io.codecomet.project_tartarus.entities.systems.PhysicsDebugSystem;
-import io.codecomet.project_tartarus.entities.systems.PhysicsSystem;
-import io.codecomet.project_tartarus.entities.systems.RenderingSystem;
+import io.codecomet.project_tartarus.entities.systems.*;
 import io.codecomet.project_tartarus.input.ControllerInputAdapter;
 import io.codecomet.project_tartarus.scene2d.Amphitheatre;
 import io.codecomet.project_tartarus.scene2d.actors.NerdStatistics;
@@ -28,15 +29,17 @@ public class GameScreen implements Screen {
     private final ControllerInputAdapter controllerInputAdapter = new ControllerInputAdapter(engine);
 
     private final RenderingSystem renderingSystem = new RenderingSystem(spriteBatch);
-    private final PhysicsDebugSystem physicsDebugSystem = new PhysicsDebugSystem(world, renderingSystem.getCamera());
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
 
     public GameScreen() {
-        engine.addSystem(renderingSystem);
         engine.addSystem(new PhysicsSystem(world));
         engine.addSystem(new ControllerMovementSystem(renderingSystem.getCamera()));
 
+        engine.addSystem(new PlayerCameraSystem(renderingSystem.getCamera())); // AFTER PHYSICS + BEFORE RENDER
+        engine.addSystem(renderingSystem);
+
+        PhysicsDebugSystem physicsDebugSystem = new PhysicsDebugSystem(world, renderingSystem.getCamera());
         subscriptions.add(
             ProjectTartarus.config.subscribe(config -> {
                 if (config.debug) engine.addSystem(physicsDebugSystem);
@@ -52,6 +55,17 @@ public class GameScreen implements Screen {
 
         // CREATE PLAYER
         engine.addEntity(PlayerEntityFactory.create(engine, world));
+
+        // TEST GRID TEXTURE
+        TransformComponent transformComponent = engine.createComponent(TransformComponent.class);
+        TextureComponent textureComponent = engine.createComponent(TextureComponent.class);
+        textureComponent.region = new TextureRegion(new Texture("test-grid.png"));
+
+        engine.addEntity(
+            engine.createEntity()
+                .add(textureComponent)
+                .add(transformComponent)
+        );
     }
 
     @Override
