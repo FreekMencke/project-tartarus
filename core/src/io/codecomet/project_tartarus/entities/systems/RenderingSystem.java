@@ -12,19 +12,19 @@ import io.codecomet.project_tartarus.entities.components.TransformComponent;
 
 import java.util.Comparator;
 
-class ZComparator implements Comparator<Entity> {
-    private final ComponentMapper<TransformComponent> transformMap = ComponentMapper.getFor(TransformComponent.class);
-
-    @Override
-    public int compare(Entity entityA, Entity entityB) {
-        return (int) Math.signum(
-            transformMap.get(entityB).position.z -
-                transformMap.get(entityA).position.z
-        );
-    }
-}
-
 public class RenderingSystem extends SortedIteratingSystem {
+
+    private static class ZComparator implements Comparator<Entity> {
+        private final ComponentMapper<TransformComponent> transformMap = ComponentMapper.getFor(TransformComponent.class);
+
+        @Override
+        public int compare(Entity entityA, Entity entityB) {
+            return (int) Math.signum(
+                transformMap.get(entityB).position.z -
+                    transformMap.get(entityA).position.z
+            );
+        }
+    }
 
     static final float PIXELS_PER_METER = 128.0f; // TODO: MAKE DEFAULT + ADD ZOOM
     static final float PIXELS_TO_METRES = 1.0f / PIXELS_PER_METER;
