@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.util.HashMap;
 
-enum FontType {
-    DefaultFont,
-    SystemFont
-}
-
 public class FontManager {
+
+    private enum FontType {
+        DefaultFont,
+        SystemFont
+    }
 
     private final HashMap<FontType, HashMap<Integer, BitmapFont>> fontCache = new HashMap<>();
 
