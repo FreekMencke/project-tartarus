@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import io.codecomet.project_tartarus.managers.FontManager;
+import io.codecomet.project_tartarus.system.managers.FontManager;
 
 public class MainMenuSkin extends Skin {
 

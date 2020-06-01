@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.codecomet.project_tartarus.ProjectTartarus;
-import io.codecomet.project_tartarus.config.GameConfiguration;
+import io.codecomet.project_tartarus.system.config.GameConfiguration;
 import io.codecomet.project_tartarus.scene2d.skins.MainMenuSkin;
 import io.codecomet.project_tartarus.screens.GameScreen;
 

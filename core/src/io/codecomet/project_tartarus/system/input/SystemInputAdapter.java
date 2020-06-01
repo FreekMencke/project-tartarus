@@ -1,9 +1,9 @@
-package io.codecomet.project_tartarus.input;
+package io.codecomet.project_tartarus.system.input;
 
 import com.badlogic.gdx.InputAdapter;
 import io.codecomet.project_tartarus.ProjectTartarus;
-import io.codecomet.project_tartarus.config.GameConfiguration;
-import io.codecomet.project_tartarus.config.KeyBindings;
+import io.codecomet.project_tartarus.system.config.GameConfiguration;
+import io.codecomet.project_tartarus.system.config.KeyBindings;
 import io.codecomet.project_tartarus.screens.MenuScreen;
 
 public class SystemInputAdapter extends InputAdapter {

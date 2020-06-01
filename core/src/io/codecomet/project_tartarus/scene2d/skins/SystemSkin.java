@@ -2,7 +2,7 @@ package io.codecomet.project_tartarus.scene2d.skins;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import io.codecomet.project_tartarus.managers.FontManager;
+import io.codecomet.project_tartarus.system.managers.FontManager;
 
 public class SystemSkin extends Skin {
 

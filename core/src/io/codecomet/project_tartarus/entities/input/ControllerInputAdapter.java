@@ -1,4 +1,4 @@
-package io.codecomet.project_tartarus.input;
+package io.codecomet.project_tartarus.entities.input;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
@@ -9,8 +9,8 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import io.codecomet.project_tartarus.ProjectTartarus;
-import io.codecomet.project_tartarus.config.GameConfiguration;
-import io.codecomet.project_tartarus.config.KeyBindings;
+import io.codecomet.project_tartarus.system.config.GameConfiguration;
+import io.codecomet.project_tartarus.system.config.KeyBindings;
 import io.codecomet.project_tartarus.entities.components.ControllerComponent;
 
 public class ControllerInputAdapter extends InputAdapter {

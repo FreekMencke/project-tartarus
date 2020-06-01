@@ -1,4 +1,4 @@
-package io.codecomet.project_tartarus.managers;
+package io.codecomet.project_tartarus.system.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

@@ -1,4 +1,4 @@
-package io.codecomet.project_tartarus.config;
+package io.codecomet.project_tartarus.system.config;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.ObjectMap;

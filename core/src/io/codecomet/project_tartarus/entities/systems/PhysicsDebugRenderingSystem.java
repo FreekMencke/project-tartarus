@@ -7,13 +7,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class PhysicsDebugSystem extends IteratingSystem {
+public class PhysicsDebugRenderingSystem extends IteratingSystem {
 
     private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private final World world;
     private final OrthographicCamera camera;
 
-    public PhysicsDebugSystem(World world, OrthographicCamera camera) {
+    public PhysicsDebugRenderingSystem(World world, OrthographicCamera camera) {
         super(Family.all().get());
         this.world = world;
         this.camera = camera;
