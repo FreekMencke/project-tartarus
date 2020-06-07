@@ -11,7 +11,7 @@ import io.codecomet.project_tartarus.entities.components.TransformComponent;
 
 public class GridEntityFactory {
 
-    private static final Texture gridTexture = new Texture("test-grid.png");
+    private static final Texture gridTexture = new Texture("textures/test-grid.png");
 
     public static Entity create(PooledEngine engine) {
         return create(engine, new Vector3());
@@ -22,8 +22,10 @@ public class GridEntityFactory {
 
         TransformComponent transformComponent = engine.createComponent(TransformComponent.class);
         transformComponent.position.set(position);
+        transformComponent.position.z = -100; // Render as lowest layer.
         TextureComponent textureComponent = engine.createComponent(TextureComponent.class);
         textureComponent.region = new TextureRegion(gridTexture);
+        textureComponent.size.set(32, 32);
 
         return engine.createEntity()
             .add(textureComponent)

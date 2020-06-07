@@ -46,7 +46,7 @@ public class PlayerCameraSystem extends IteratingSystem {
         Vector3 nextPosition = new Vector3(transformMap.get(entity).position);
         nextPosition.z = camera.position.z; // don't use transform Z for camera
 
-        camera.position.interpolate(nextPosition, PhysicsSystem.MAX_STEP_TIME, Interpolation.pow2Out);
+        camera.position.interpolate(nextPosition, PhysicsSystem.MAX_STEP_TIME *2, Interpolation.pow2Out);
     }
 
 }

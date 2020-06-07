@@ -48,14 +48,11 @@ public class ControllerMovementSystem extends IteratingSystem {
     }
 
     private void applyVelocityToBody(Body body, Vector2 direction, VelocityComponent velocity) {
-        body.setLinearDamping(velocity.speedDampening);
-
         if (direction.isZero()) return;
 
         Vector2 linearVelocity = new Vector2(0, velocity.speed);
         linearVelocity.rotate(new Vector2(direction).rotate90(-1).angle());
 
-        // APPLY VELOCITY TO BODY
         body.setLinearVelocity(linearVelocity);
     }
 

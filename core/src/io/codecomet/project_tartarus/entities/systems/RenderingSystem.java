@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import io.codecomet.project_tartarus.entities.components.TextureComponent;
 import io.codecomet.project_tartarus.entities.components.TransformComponent;
 
@@ -20,8 +21,8 @@ public class RenderingSystem extends SortedIteratingSystem {
         @Override
         public int compare(Entity entityA, Entity entityB) {
             return (int) Math.signum(
-                transformMap.get(entityB).position.z -
-                    transformMap.get(entityA).position.z
+                transformMap.get(entityA).position.z -
+                    transformMap.get(entityB).position.z
             );
         }
     }
@@ -65,8 +66,16 @@ public class RenderingSystem extends SortedIteratingSystem {
             return;
         }
 
-        float width = texture.region.getRegionWidth();
-        float height = texture.region.getRegionHeight();
+        float width;
+        float height;
+
+        if (!texture.size.equals(Vector2.Zero)) {
+            width = texture.size.x * PIXELS_PER_METER;
+            height = texture.size.y * PIXELS_PER_METER;
+        } else {
+            width = texture.region.getRegionWidth();
+            height = texture.region.getRegionHeight();
+        }
 
         float originX = width / 2f;
         float originY = height / 2f;

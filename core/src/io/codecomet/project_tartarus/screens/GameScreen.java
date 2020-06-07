@@ -12,6 +12,7 @@ import io.codecomet.project_tartarus.entities.factories.GridEntityFactory;
 import io.codecomet.project_tartarus.entities.factories.PlayerEntityFactory;
 import io.codecomet.project_tartarus.entities.input.ControllerInputAdapter;
 import io.codecomet.project_tartarus.entities.systems.*;
+import io.codecomet.project_tartarus.map.sector.TestSector;
 import io.codecomet.project_tartarus.scene2d.Amphitheatre;
 import io.codecomet.project_tartarus.scene2d.actors.NerdStatistics;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -45,7 +46,9 @@ public class GameScreen implements Screen {
         ProjectTartarus.addInputProcessor(controllerInputAdapter);
 
         engine.addEntity(GridEntityFactory.create(engine)); // CREATE TEST GRID
-        engine.addEntity(PlayerEntityFactory.create(engine, world)); // CREATE PLAYER
+        engine.addEntity(PlayerEntityFactory.create(engine, world)); // CREATE PLAYER\
+
+        new TestSector(engine, world).entities.forEach(engine::addEntity);
     }
 
     @Override
