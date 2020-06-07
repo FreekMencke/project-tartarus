@@ -25,10 +25,10 @@ public class TestSector implements Disposable {
     private Array<Entity> createEntities() {
         Array<Entity> entities = new Array<>();
 
-        entities.add(Pot.smallPotBuilder(engine, world).setTransform(new Vector3(1f, 0, 0)).build());
-        entities.add(Pot.smallPotBuilder(engine, world).setTransform(new Vector3(1.25f, .25f, 0)).build());
-        entities.add(Pot.defaultPotBuilder(engine, world).setTransform(new Vector3(1.25f, 0, 0)).build());
-        entities.add(Pot.largePotBuilder(engine, world).setTransform(new Vector3(1f, .3f, 0)).build());
+        entities.add(Pot.defaultPotBuilder(engine, world).setTransform(new Vector3(1.28f, 0, 0)).build());
+        entities.add(Pot.defaultPotBuilder(engine, world).setTransform(new Vector3(1.0f, .28f, 0)).build());
+        entities.add(Pot.largePotBuilder(engine, world).setTransform(new Vector3(1.28f, .28f, 0)).build());
+        entities.add(Pot.largePotBuilder(engine, world).setTransform(new Vector3(1f, 0, 0)).build());
 
         return entities;
     }

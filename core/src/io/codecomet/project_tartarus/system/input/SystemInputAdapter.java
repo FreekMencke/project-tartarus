@@ -2,9 +2,9 @@ package io.codecomet.project_tartarus.system.input;
 
 import com.badlogic.gdx.InputAdapter;
 import io.codecomet.project_tartarus.ProjectTartarus;
+import io.codecomet.project_tartarus.screens.GameScreen;
 import io.codecomet.project_tartarus.system.config.GameConfiguration;
 import io.codecomet.project_tartarus.system.config.KeyBindings;
-import io.codecomet.project_tartarus.screens.MenuScreen;
 
 public class SystemInputAdapter extends InputAdapter {
 
@@ -24,8 +24,9 @@ public class SystemInputAdapter extends InputAdapter {
             return true;
         }
 
-        if (config.keyMap.get(KeyBindings.Action.RESET_TO_MAIN_MENU) == keycode) {
-            ProjectTartarus.getInstance().setScreen(new MenuScreen());
+        if (config.keyMap.get(KeyBindings.Action.RESET_GAME) == keycode) {
+            if (!(ProjectTartarus.getInstance().getScreen() instanceof GameScreen)) return false;
+            ProjectTartarus.getInstance().setScreen(new GameScreen());
             return true;
         }
 

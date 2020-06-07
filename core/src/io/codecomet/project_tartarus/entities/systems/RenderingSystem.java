@@ -21,13 +21,12 @@ public class RenderingSystem extends SortedIteratingSystem {
         @Override
         public int compare(Entity entityA, Entity entityB) {
             return (int) Math.signum(
-                transformMap.get(entityA).position.z -
-                    transformMap.get(entityB).position.z
+                transformMap.get(entityA).position.z - transformMap.get(entityB).position.z
             );
         }
     }
 
-    static final float PIXELS_PER_METER = 128.0f; // TODO: MAKE DEFAULT + ADD ZOOM
+    static final float PIXELS_PER_METER = 160.0f; // TODO: MAKE DEFAULT + ADD ZOOM
     static final float PIXELS_TO_METRES = 1.0f / PIXELS_PER_METER;
 
     private final SpriteBatch batch;

@@ -15,7 +15,7 @@ public interface KeyBindings {
         // SYSTEM
         public static final String TOGGLE_DEBUG = "TOGGLE_DEBUG";
         public static final String TOGGLE_NERD_STATISTICS = "TOGGLE_NERD_STATISTICS";
-        public static final String RESET_TO_MAIN_MENU = "RESET_TO_MAIN_MENU";
+        public static final String RESET_GAME = "RESET_TO_MAIN_MENU";
     }
 
     /**
@@ -38,7 +38,7 @@ public interface KeyBindings {
             put(Action.TOGGLE_NERD_STATISTICS, Input.Keys.F7);
             put(Action.TOGGLE_DEBUG, Input.Keys.F8);
 
-            put(Action.RESET_TO_MAIN_MENU, Input.Keys.F12);
+            put(Action.RESET_GAME, Input.Keys.F12);
         }
     }
 

@@ -3,11 +3,15 @@ package io.codecomet.project_tartarus.entities.factories;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import io.codecomet.project_tartarus.entities.components.*;
 
 public class PlayerEntityFactory {
+
+    private static final Texture PLAYER_TEXTURE = new Texture("textures/player/body.png");
 
     public static final float HEAD_RADIUS = .12f; // 12cm
     public static final Vector2 SHOULDERS = new Vector2(.2f, .06f); // half-values: 40cm x 12cm
@@ -15,11 +19,16 @@ public class PlayerEntityFactory {
     public static Entity create(PooledEngine engine, World world) {
         Gdx.app.log("PlayerEntityFactory", "Create");
 
+        TextureComponent textureComponent = engine.createComponent(TextureComponent.class);
+        textureComponent.region = new TextureRegion(PLAYER_TEXTURE);
+        textureComponent.size = new Vector2(SHOULDERS.x, HEAD_RADIUS).scl(2); // scl(2) because radius & half-values
+
         return engine.createEntity()
             .add(createBodyComponent(engine, world))
             .add(engine.createComponent(CameraComponent.class))
             .add(engine.createComponent(ControllerComponent.class))
             .add(engine.createComponent(TransformComponent.class))
+            .add(textureComponent)
             .add(engine.createComponent(PlayerComponent.class))
             .add(engine.createComponent(VelocityComponent.class));
     }

@@ -17,16 +17,8 @@ import io.codecomet.project_tartarus.entities.components.VelocityComponent;
 public interface Pot {
 
     class Size {
-        public static final float SMALL = .1f;
-        public static final float DEFAULT = .125f;
+        public static final float DEFAULT = .10f;
         public static final float LARGE = .15f;
-    }
-
-    static PotBuilder smallPotBuilder(PooledEngine engine, World world) {
-        return PotBuilder.create(engine)
-            .setBody(createPotBody(world, Size.SMALL))
-            .setTexture(Size.SMALL)
-            .setTransform(new Vector3());
     }
 
     static PotBuilder defaultPotBuilder(PooledEngine engine, World world) {
@@ -68,7 +60,7 @@ public interface Pot {
 
         public PotBuilder setTexture(float radius) {
             textureComponent = engine.createComponent(TextureComponent.class);
-            textureComponent.region = new TextureRegion(POT_TEXTURE, 512, 512);
+            textureComponent.region = new TextureRegion(POT_TEXTURE);
             textureComponent.size.set(radius * 2, radius * 2);
             return this;
         }
@@ -87,7 +79,7 @@ public interface Pot {
             );
 
             VelocityComponent velocityComponent = new VelocityComponent();
-            velocityComponent.speedDampening = 4;
+            velocityComponent.speedDampening = 5;
 
             return engine.createEntity()
                 .add(bodyComponent)
