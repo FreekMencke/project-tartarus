@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.codecomet.project_tartarus.ProjectTartarus;
+import io.codecomet.project_tartarus.screens.SettingsScreen;
 import io.codecomet.project_tartarus.system.config.GameConfiguration;
 import io.codecomet.project_tartarus.scene2d.skins.MainMenuSkin;
 import io.codecomet.project_tartarus.screens.GameScreen;
@@ -27,7 +28,7 @@ public class MainMenu extends Table {
     }
 
     private void addStartButton() {
-        TextButton startButton = new TextButton("Start", MainMenuSkin.getInstance());
+        TextButton startButton = new TextButton(GameConfiguration.Translations.START, MainMenuSkin.getInstance());
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -38,12 +39,18 @@ public class MainMenu extends Table {
     }
 
     private void addSettingsButton() {
-        TextButton settingsButton = new TextButton("Settings", MainMenuSkin.getInstance());
+        TextButton settingsButton = new TextButton(GameConfiguration.Translations.SETTINGS, MainMenuSkin.getInstance());
+        settingsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ProjectTartarus.getInstance().setScreen(new SettingsScreen());
+            }
+        });
         addButton(settingsButton);
     }
 
     private void addExitButton() {
-        TextButton exitButton = new TextButton("Exit", MainMenuSkin.getInstance());
+        TextButton exitButton = new TextButton(GameConfiguration.Translations.EXIT, MainMenuSkin.getInstance());
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

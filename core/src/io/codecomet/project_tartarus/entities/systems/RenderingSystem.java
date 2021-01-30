@@ -26,7 +26,7 @@ public class RenderingSystem extends SortedIteratingSystem {
         }
     }
 
-    static final float PIXELS_PER_METER = 160.0f; // TODO: MAKE DEFAULT + ADD ZOOM
+    static final float PIXELS_PER_METER = 200.0f; // TODO: MAKE DEFAULT + ADD ZOOM
     static final float PIXELS_TO_METRES = 1.0f / PIXELS_PER_METER;
 
     private final SpriteBatch batch;
