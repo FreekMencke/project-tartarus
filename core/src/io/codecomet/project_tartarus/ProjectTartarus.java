@@ -56,14 +56,12 @@ public class ProjectTartarus extends Game {
 
     public static void addInputProcessor(InputProcessor inputProcessor) {
         Gdx.app.log("SYSTEM", MessageFormat.format("ADD INPUT_PROCESSOR \"{0}\"", inputProcessor.getClass().getSimpleName()));
-        InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        inputMultiplexer.addProcessor(inputProcessor);
+        ((InputMultiplexer) Gdx.input.getInputProcessor()).addProcessor(inputProcessor);
     }
 
     public static void removeInputProcessor(InputProcessor inputProcessor) {
         Gdx.app.log("SYSTEM", MessageFormat.format("REMOVE INPUT_PROCESSOR \"{0}\"", inputProcessor.getClass().getSimpleName()));
-        InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        inputMultiplexer.removeProcessor(inputProcessor);
+        ((InputMultiplexer) Gdx.input.getInputProcessor()).removeProcessor(inputProcessor);
     }
 
     private static String getCurrentScreenName() {

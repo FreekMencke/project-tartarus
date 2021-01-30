@@ -101,7 +101,6 @@ public interface Pot {
         fixtureDef.shape = potShape;
         fixtureDef.density = 50;
 
-
         body.createFixture(fixtureDef);
         potShape.dispose();
 
