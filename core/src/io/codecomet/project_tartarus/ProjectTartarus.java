@@ -14,6 +14,7 @@ public class ProjectTartarus extends Game {
 
     @Override
     public void create() {
+        GameConfiguration.Settings.init();
         Gdx.input.setInputProcessor(new InputMultiplexer());
         ProjectTartarus.addInputProcessor(new SystemInputAdapter());
         this.setScreen(new MenuScreen());

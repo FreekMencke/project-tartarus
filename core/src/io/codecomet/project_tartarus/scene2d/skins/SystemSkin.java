@@ -1,6 +1,9 @@
 package io.codecomet.project_tartarus.scene2d.skins;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -19,8 +22,22 @@ public class SystemSkin extends Skin {
     }
 
     private void buildSkin() {
+        createBaseTexture();
+
         createTitleStyle();
         createLabelStyle();
+        createDefaultButtonStyle();
+        createDefaultCheckboxStyle();
+    }
+
+    private void createBaseTexture() {
+        // Generate a 1x1 white texture and store it in the skin named "base".
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+
+        pixmap.setColor(Color.WHITE);
+        pixmap.fill();
+
+        add("base", new Texture(pixmap));
     }
 
     private void createTitleStyle() {
@@ -39,7 +56,20 @@ public class SystemSkin extends Skin {
         add("default", style);
     }
 
-    private void createDefaultButton() {
+    private void createDefaultCheckboxStyle() {
+        CheckBox.CheckBoxStyle style = new CheckBox.CheckBoxStyle();
+
+        style.font = FontManager.getInstance().getSystemFont(32);
+        style.fontColor = Color.WHITE;
+
+        style.checkboxOn =  newDrawable("base", Color.BROWN);
+        style.checkboxOff =  newDrawable("base", Color.GRAY);
+        style.checkboxOver = newDrawable("base", new Color(0x5e2f0dff));
+
+        add("default", style);
+    }
+
+    private void createDefaultButtonStyle() {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 
         style.font = FontManager.getInstance().getSystemFont(32);

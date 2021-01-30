@@ -24,7 +24,7 @@ public class MainMenuSkin extends Skin {
         createBaseTexture();
 
         createTitleStyle();
-        createDefaultButton();
+        createDefaultButtonStyle();
     }
 
     private void createBaseTexture() {
@@ -45,7 +45,7 @@ public class MainMenuSkin extends Skin {
         add("title", style);
     }
 
-    private void createDefaultButton() {
+    private void createDefaultButtonStyle() {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 
         style.font = FontManager.getInstance().getDefaultFont(32);

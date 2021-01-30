@@ -8,10 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.codecomet.project_tartarus.ProjectTartarus;
-import io.codecomet.project_tartarus.screens.SettingsScreen;
-import io.codecomet.project_tartarus.system.config.GameConfiguration;
 import io.codecomet.project_tartarus.scene2d.skins.MainMenuSkin;
 import io.codecomet.project_tartarus.screens.GameScreen;
+import io.codecomet.project_tartarus.screens.SettingsScreen;
+import io.codecomet.project_tartarus.system.config.TranslationDictionary;
 
 public class MainMenu extends Table {
 
@@ -23,12 +23,12 @@ public class MainMenu extends Table {
     }
 
     private void addTitle() {
-        Label titleLabel = new Label(GameConfiguration.Defaults.GAME_TITLE, MainMenuSkin.getInstance(), "title");
+        Label titleLabel = new Label(TranslationDictionary.Defaults.GAME_TITLE, MainMenuSkin.getInstance(), "title");
         add(titleLabel).spaceBottom(50).row();
     }
 
     private void addStartButton() {
-        TextButton startButton = new TextButton(GameConfiguration.Translations.START, MainMenuSkin.getInstance());
+        TextButton startButton = new TextButton(TranslationDictionary.Translations.START, MainMenuSkin.getInstance());
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -39,7 +39,7 @@ public class MainMenu extends Table {
     }
 
     private void addSettingsButton() {
-        TextButton settingsButton = new TextButton(GameConfiguration.Translations.SETTINGS, MainMenuSkin.getInstance());
+        TextButton settingsButton = new TextButton(TranslationDictionary.Translations.SETTINGS, MainMenuSkin.getInstance());
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -50,7 +50,7 @@ public class MainMenu extends Table {
     }
 
     private void addExitButton() {
-        TextButton exitButton = new TextButton(GameConfiguration.Translations.EXIT, MainMenuSkin.getInstance());
+        TextButton exitButton = new TextButton(TranslationDictionary.Translations.EXIT, MainMenuSkin.getInstance());
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
