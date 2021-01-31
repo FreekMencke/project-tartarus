@@ -3,6 +3,8 @@ package io.codecomet.project_tartarus.system.config;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
+import java.util.Map;
+
 public interface GameConfiguration {
 
     class Configuration {
@@ -15,26 +17,28 @@ public interface GameConfiguration {
     class Settings {
 
         private static final String PREFERENCES_KEY = "GAME_CONFIGURATION_SETTINGS";
-        private static Preferences prefs;
+        private static Map<String, ?> savedPrefs;
+        private static Preferences unsavedPrefs;
 
         public static void init() {
-            load();
+            unsavedPrefs = Gdx.app.getPreferences(Settings.PREFERENCES_KEY);
+            savedPrefs = unsavedPrefs.get();
             apply();
         }
 
         public static void load() {
-            prefs = Gdx.app.getPreferences(Settings.PREFERENCES_KEY);
+            unsavedPrefs.put(savedPrefs);
         }
 
         //region vSync setting
         private static final String VSYNC_KEY = "VSYNC";
         public static boolean isVSyncEnabled() {
-            return prefs.getBoolean(VSYNC_KEY, true);
+            return unsavedPrefs.getBoolean(VSYNC_KEY, true);
         }
 
         public static boolean toggleVSync() {
             boolean nextValue = !isVSyncEnabled();
-            prefs.putBoolean(VSYNC_KEY, nextValue);
+            unsavedPrefs.putBoolean(VSYNC_KEY, nextValue);
             return nextValue;
         }
         //endregion
@@ -42,19 +46,20 @@ public interface GameConfiguration {
         //region fullScreen setting
         private static final String FULLSCREEN_KEY = "FULLSCREEN";
         public static boolean isFullscreenEnabled() {
-            return prefs.getBoolean(FULLSCREEN_KEY, false);
+            return unsavedPrefs.getBoolean(FULLSCREEN_KEY, false);
         }
 
         public static boolean toggleFullscreen() {
             boolean nextValue = !isFullscreenEnabled();
-            prefs.putBoolean(FULLSCREEN_KEY, nextValue);
+            unsavedPrefs.putBoolean(FULLSCREEN_KEY, nextValue);
             return nextValue;
         }
         //endregion
 
         public static void save() {
             apply();
-            prefs.flush();
+            unsavedPrefs.flush();
+            savedPrefs = unsavedPrefs.get();
         }
 
         private static void apply() {
