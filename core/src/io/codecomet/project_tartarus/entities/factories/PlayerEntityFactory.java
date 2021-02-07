@@ -13,8 +13,8 @@ public class PlayerEntityFactory {
 
     private static final Texture PLAYER_TEXTURE = new Texture("textures/player/body.png");
 
-    public static final float HEAD_RADIUS = .12f; // 12cm
-    public static final Vector2 SHOULDERS = new Vector2(.2f, .06f); // half-values: 40cm x 12cm
+    public static final float HEAD_RADIUS = .15f; // 15cm
+    public static final Vector2 SHOULDERS = new Vector2(.25f, .075f); // half-values: 50cm x 16cm
 
     public static Entity create(PooledEngine engine, World world) {
         Gdx.app.log("PlayerEntityFactory", "Create");

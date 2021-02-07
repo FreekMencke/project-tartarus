@@ -1,18 +1,17 @@
 package io.codecomet.project_tartarus.screens;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.utils.ScreenUtils;
 import io.codecomet.project_tartarus.ProjectTartarus;
 import io.codecomet.project_tartarus.scene2d.Amphitheatre;
 import io.codecomet.project_tartarus.scene2d.actors.MainMenu;
 
-public class MenuScreen implements Screen {
+public class MainMenuScreen implements Screen {
 
     private final Amphitheatre amphitheatre = new Amphitheatre();
 
-    public MenuScreen() {
+    public MainMenuScreen() {
         amphitheatre.add(new MainMenu());
     }
 
@@ -25,8 +24,7 @@ public class MenuScreen implements Screen {
     public void render(float delta) {
         amphitheatre.act();
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        ScreenUtils.clear(0,0,0,1);
 
         amphitheatre.draw();
     }

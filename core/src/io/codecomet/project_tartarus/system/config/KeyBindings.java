@@ -6,6 +6,9 @@ import com.badlogic.gdx.utils.ObjectMap;
 public interface KeyBindings {
 
     final class Action {
+        // GAME
+        public static final String OPEN_INGAME_MENU = "INGAME_MENU";
+
         // CHARACTER MOVEMENT
         public static final String UP = "UP";
         public static final String RIGHT = "RIGHT";
@@ -23,8 +26,13 @@ public interface KeyBindings {
      */
     class KeyMap extends ObjectMap<String, Integer> {
         public KeyMap() {
+            this.setupGameControls();
             this.setupMovementControls();
             this.setupSystemControls();
+        }
+
+        private void setupGameControls() {
+            put(Action.OPEN_INGAME_MENU, Input.Keys.ESCAPE);
         }
 
         private void setupMovementControls() {

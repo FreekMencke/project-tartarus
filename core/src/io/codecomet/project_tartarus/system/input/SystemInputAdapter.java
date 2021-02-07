@@ -9,7 +9,7 @@ import io.codecomet.project_tartarus.system.config.KeyBindings;
 public class SystemInputAdapter extends InputAdapter {
 
     @Override
-    public boolean keyUp(int keycode) {
+    public boolean keyDown(int keycode) {
         GameConfiguration.Configuration config = ProjectTartarus.config.getValue();
 
         if (config.keyMap.get(KeyBindings.Action.TOGGLE_DEBUG) == keycode) {

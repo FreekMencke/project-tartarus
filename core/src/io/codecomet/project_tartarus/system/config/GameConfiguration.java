@@ -12,6 +12,7 @@ public interface GameConfiguration {
 
         public boolean debug = false;
         public boolean nerdStatistics = false;
+        public boolean paused = false;
     }
 
     class Settings {
@@ -36,10 +37,9 @@ public interface GameConfiguration {
             return unsavedPrefs.getBoolean(VSYNC_KEY, true);
         }
 
-        public static boolean toggleVSync() {
+        public static void toggleVSync() {
             boolean nextValue = !isVSyncEnabled();
             unsavedPrefs.putBoolean(VSYNC_KEY, nextValue);
-            return nextValue;
         }
         //endregion
 
@@ -49,10 +49,9 @@ public interface GameConfiguration {
             return unsavedPrefs.getBoolean(FULLSCREEN_KEY, false);
         }
 
-        public static boolean toggleFullscreen() {
+        public static void toggleFullscreen() {
             boolean nextValue = !isFullscreenEnabled();
             unsavedPrefs.putBoolean(FULLSCREEN_KEY, nextValue);
-            return nextValue;
         }
         //endregion
 

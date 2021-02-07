@@ -11,6 +11,10 @@ public interface TranslationDictionary {
         public static final String SETTINGS = "Settings";
         public static final String EXIT = "Exit";
 
+        public static final String MENU = "Menu";
+        public static final String RESUME = "Resume";
+        public static final String EXIT_TO_MAIN_MENU = "Exit to Main Menu";
+
         public static final String APPLY = "Apply";
         public static final String BACK = "Back";
 

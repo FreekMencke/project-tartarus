@@ -1,7 +1,7 @@
 package io.codecomet.project_tartarus;
 
 import com.badlogic.gdx.*;
-import io.codecomet.project_tartarus.screens.MenuScreen;
+import io.codecomet.project_tartarus.screens.MainMenuScreen;
 import io.codecomet.project_tartarus.system.config.GameConfiguration;
 import io.codecomet.project_tartarus.system.input.SystemInputAdapter;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
@@ -17,7 +17,7 @@ public class ProjectTartarus extends Game {
         GameConfiguration.Settings.init();
         Gdx.input.setInputProcessor(new InputMultiplexer());
         ProjectTartarus.addInputProcessor(new SystemInputAdapter());
-        this.setScreen(new MenuScreen());
+        this.setScreen(new MainMenuScreen());
     }
 
     public static ProjectTartarus getInstance() {

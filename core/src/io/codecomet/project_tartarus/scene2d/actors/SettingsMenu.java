@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import io.codecomet.project_tartarus.ProjectTartarus;
 import io.codecomet.project_tartarus.scene2d.skins.SystemSkin;
-import io.codecomet.project_tartarus.screens.MenuScreen;
+import io.codecomet.project_tartarus.screens.MainMenuScreen;
 import io.codecomet.project_tartarus.system.config.GameConfiguration;
 import io.codecomet.project_tartarus.system.config.TranslationDictionary;
 
@@ -93,7 +93,7 @@ public class SettingsMenu extends Table {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ProjectTartarus.getInstance().setScreen(new MenuScreen());
+                ProjectTartarus.getInstance().setScreen(new MainMenuScreen());
             }
         });
         return backButton;

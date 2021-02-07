@@ -8,10 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
-import io.codecomet.project_tartarus.entities.components.BodyComponent;
-import io.codecomet.project_tartarus.entities.components.TextureComponent;
-import io.codecomet.project_tartarus.entities.components.TransformComponent;
-import io.codecomet.project_tartarus.entities.components.VelocityComponent;
+import io.codecomet.project_tartarus.entities.components.*;
 
 
 public interface Pot {
@@ -99,7 +96,7 @@ public interface Pot {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = potShape;
-        fixtureDef.density = 50;
+        fixtureDef.density = 100;
 
         body.createFixture(fixtureDef);
         potShape.dispose();
