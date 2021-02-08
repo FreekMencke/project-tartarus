@@ -9,9 +9,8 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import io.codecomet.project_tartarus.ProjectTartarus;
-import io.codecomet.project_tartarus.system.config.GameConfiguration;
-import io.codecomet.project_tartarus.system.config.KeyBindings;
 import io.codecomet.project_tartarus.entities.components.ControllerComponent;
+import io.codecomet.project_tartarus.system.config.KeyBindings;
 
 public class ControllerInputAdapter extends InputAdapter {
 
@@ -80,15 +79,14 @@ public class ControllerInputAdapter extends InputAdapter {
     }
 
     private void updateDirection(Entity e) {
-        GameConfiguration.Configuration config = ProjectTartarus.config.getValue();
         ControllerComponent c = controllerMap.get(e);
 
         Vector2 direction = new Vector2();
 
-        if (keysPressed.get(config.keyMap.get(KeyBindings.Action.UP), false)) direction.add(0, 1);
-        if (keysPressed.get(config.keyMap.get(KeyBindings.Action.RIGHT), false)) direction.add(1, 0);
-        if (keysPressed.get(config.keyMap.get(KeyBindings.Action.DOWN), false)) direction.sub(0, 1);
-        if (keysPressed.get(config.keyMap.get(KeyBindings.Action.LEFT), false)) direction.sub(1, 0);
+        if (keysPressed.get(ProjectTartarus.KEY_MAP.get(KeyBindings.Action.UP), false)) direction.add(0, 1);
+        if (keysPressed.get(ProjectTartarus.KEY_MAP.get(KeyBindings.Action.RIGHT), false)) direction.add(1, 0);
+        if (keysPressed.get(ProjectTartarus.KEY_MAP.get(KeyBindings.Action.DOWN), false)) direction.sub(0, 1);
+        if (keysPressed.get(ProjectTartarus.KEY_MAP.get(KeyBindings.Action.LEFT), false)) direction.sub(1, 0);
 
         c.direction.set(direction);
     }

@@ -52,7 +52,11 @@ public class PhysicsSystem extends IteratingSystem {
         transformComponent.position.x = position.x;
         transformComponent.position.y = position.y;
 
-        transformComponent.rotation = bodyComp.body.getAngle() * MathUtils.radiansToDegrees;
+        float nextRotation = bodyComp.body.getAngle() * MathUtils.radiansToDegrees;
+        if(transformComponent.rotation != nextRotation) {
+            bodyComp.body.setAwake(true); // to prevent object sleeping while rotating
+            transformComponent.rotation = nextRotation;
+        }
     }
 
 }

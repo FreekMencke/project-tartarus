@@ -6,12 +6,14 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import io.codecomet.project_tartarus.ProjectTartarus;
 import io.codecomet.project_tartarus.scene2d.Amphitheatre;
 import io.codecomet.project_tartarus.scene2d.actors.SettingsMenu;
+import io.codecomet.project_tartarus.system.config.GameConfiguration;
 
 public class SettingsScreen implements Screen {
 
     private final Amphitheatre amphitheatre = new Amphitheatre();
 
     public SettingsScreen() {
+        ProjectTartarus.CONFIG.onNext(new GameConfiguration.Configuration());
         amphitheatre.add(new SettingsMenu());
     }
 
@@ -23,9 +25,7 @@ public class SettingsScreen implements Screen {
     @Override
     public void render(float delta) {
         amphitheatre.act();
-
-        ScreenUtils.clear(0,0,0,1);
-
+        ScreenUtils.clear(0, 0, 0, 1);
         amphitheatre.draw();
     }
 

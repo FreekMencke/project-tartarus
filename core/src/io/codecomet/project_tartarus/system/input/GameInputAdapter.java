@@ -4,14 +4,13 @@ import com.badlogic.gdx.InputAdapter;
 import io.codecomet.project_tartarus.ProjectTartarus;
 import io.codecomet.project_tartarus.scene2d.Amphitheatre;
 import io.codecomet.project_tartarus.scene2d.actors.GameMenu;
-import io.codecomet.project_tartarus.system.config.GameConfiguration;
 import io.codecomet.project_tartarus.system.config.KeyBindings;
+
+import java.util.Arrays;
 
 public class GameInputAdapter extends InputAdapter {
 
     private final Amphitheatre amphitheatre;
-
-    private GameMenu gameMenu;
 
     public GameInputAdapter(Amphitheatre amphitheatre) {
         this.amphitheatre = amphitheatre;
@@ -19,16 +18,18 @@ public class GameInputAdapter extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        GameConfiguration.Configuration config = ProjectTartarus.config.getValue();
+        GameMenu gameMenu = (GameMenu) Arrays.stream(amphitheatre.getActors().toArray())
+                .filter(a -> a instanceof GameMenu)
+                .findFirst()
+                .orElse(null);
 
-        if (config.keyMap.get(KeyBindings.Action.OPEN_INGAME_MENU) == keycode) {
-            if(config.paused = !amphitheatre.getActors().contains(gameMenu, true)) {
-                this.amphitheatre.addActor(gameMenu = new GameMenu());
+        if (ProjectTartarus.KEY_MAP.get(KeyBindings.Action.OPEN_INGAME_MENU) == keycode) {
+            if (gameMenu == null) {
+                this.amphitheatre.addActor(new GameMenu());
             } else {
                 gameMenu.remove();
-                gameMenu = null;
             }
-            ProjectTartarus.config.onNext(config);
+            ProjectTartarus.CONFIG.onNext(ProjectTartarus.CONFIG.getValue().togglePause());
             return true;
         }
 

@@ -64,6 +64,7 @@ public class PlayerEntityFactory {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shouldersShape;
+        fixtureDef.density = 800;
         body.createFixture(fixtureDef);
 
         shouldersShape.dispose();

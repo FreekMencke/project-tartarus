@@ -8,11 +8,25 @@ import java.util.Map;
 public interface GameConfiguration {
 
     class Configuration {
-        public KeyBindings.KeyMap keyMap = new KeyBindings.KeyMap();
-
         public boolean debug = false;
         public boolean nerdStatistics = false;
         public boolean paused = false;
+
+        public Configuration toggleDebug() {
+            debug = !debug;
+            return this;
+        }
+
+        public Configuration toggleNerdStatistics() {
+            nerdStatistics = !nerdStatistics;
+            return this;
+        }
+
+        public Configuration togglePause() {
+            paused = !paused;
+            return this;
+        }
+
     }
 
     class Settings {
@@ -33,6 +47,7 @@ public interface GameConfiguration {
 
         //region vSync setting
         private static final String VSYNC_KEY = "VSYNC";
+
         public static boolean isVSyncEnabled() {
             return unsavedPrefs.getBoolean(VSYNC_KEY, true);
         }
@@ -45,6 +60,7 @@ public interface GameConfiguration {
 
         //region fullScreen setting
         private static final String FULLSCREEN_KEY = "FULLSCREEN";
+
         public static boolean isFullscreenEnabled() {
             return unsavedPrefs.getBoolean(FULLSCREEN_KEY, false);
         }
@@ -67,10 +83,10 @@ public interface GameConfiguration {
             Gdx.graphics.setVSync(isVSyncEnabled());
 
             // fullScreen
-            if(isFullscreenEnabled()) {
+            if (isFullscreenEnabled()) {
                 Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
             } else {
-                Gdx.graphics.setWindowedMode(1280,720);
+                Gdx.graphics.setWindowedMode(1280, 720);
             }
         }
 

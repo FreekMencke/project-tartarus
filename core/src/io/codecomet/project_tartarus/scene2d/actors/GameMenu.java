@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Align;
 import io.codecomet.project_tartarus.ProjectTartarus;
 import io.codecomet.project_tartarus.scene2d.skins.SystemSkin;
 import io.codecomet.project_tartarus.screens.MainMenuScreen;
-import io.codecomet.project_tartarus.system.config.GameConfiguration;
 import io.codecomet.project_tartarus.system.config.TranslationDictionary;
 
 public class GameMenu extends Table {
@@ -34,9 +33,7 @@ public class GameMenu extends Table {
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                GameConfiguration.Configuration config = ProjectTartarus.config.getValue();
-                config.paused = false;
-                ProjectTartarus.config.onNext(config);
+                ProjectTartarus.CONFIG.onNext(ProjectTartarus.CONFIG.getValue().togglePause());
                 remove();
             }
         });

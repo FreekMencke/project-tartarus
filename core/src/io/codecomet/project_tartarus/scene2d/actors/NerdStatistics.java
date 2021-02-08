@@ -60,7 +60,7 @@ public class NerdStatistics extends Table {
     public void act(float delta) {
         super.act(delta);
         // DON'T UPDATE IF NERD_STATISTICS ARE DISABLED
-        if (!ProjectTartarus.config.getValue().nerdStatistics) return;
+        if (!ProjectTartarus.CONFIG.getValue().nerdStatistics) return;
 
         // UPDATE FPS LABEL
         fpsLabel.setText(MessageFormat.format("FPS: {0} ", Gdx.graphics.getFramesPerSecond()));
@@ -90,15 +90,16 @@ public class NerdStatistics extends Table {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        if (!ProjectTartarus.config.getValue().nerdStatistics) return;
+        if (!ProjectTartarus.CONFIG.getValue().nerdStatistics) return;
 
         super.draw(batch, parentAlpha);
     }
 
     @Override
     public void drawDebug(ShapeRenderer shapes) {
-        if (!ProjectTartarus.config.getValue().nerdStatistics) return;
+        if (!ProjectTartarus.CONFIG.getValue().nerdStatistics) return;
 
         super.drawDebug(shapes);
     }
+
 }

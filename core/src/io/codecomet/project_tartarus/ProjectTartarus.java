@@ -3,6 +3,7 @@ package io.codecomet.project_tartarus;
 import com.badlogic.gdx.*;
 import io.codecomet.project_tartarus.screens.MainMenuScreen;
 import io.codecomet.project_tartarus.system.config.GameConfiguration;
+import io.codecomet.project_tartarus.system.config.KeyBindings;
 import io.codecomet.project_tartarus.system.input.SystemInputAdapter;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
@@ -10,18 +11,21 @@ import java.text.MessageFormat;
 
 public class ProjectTartarus extends Game {
 
-    public static final BehaviorSubject<GameConfiguration.Configuration> config = BehaviorSubject.createDefault(new GameConfiguration.Configuration());
+    public static final BehaviorSubject<GameConfiguration.Configuration> CONFIG = BehaviorSubject.createDefault(new GameConfiguration.Configuration());
+    public static final KeyBindings.KeyMap KEY_MAP = new KeyBindings.KeyMap();
+
+    public static ProjectTartarus getInstance() {
+        return (ProjectTartarus) Gdx.app.getApplicationListener();
+    }
 
     @Override
     public void create() {
         GameConfiguration.Settings.init();
+
         Gdx.input.setInputProcessor(new InputMultiplexer());
         ProjectTartarus.addInputProcessor(new SystemInputAdapter());
-        this.setScreen(new MainMenuScreen());
-    }
 
-    public static ProjectTartarus getInstance() {
-        return (ProjectTartarus) Gdx.app.getApplicationListener();
+        this.setScreen(new MainMenuScreen());
     }
 
     @Override
@@ -35,7 +39,7 @@ public class ProjectTartarus extends Game {
         if (this.screen != null) {
             Gdx.app.log(getCurrentScreenName(), "Hide");
             this.screen.hide();
-            if(dispose) {
+            if (dispose) {
                 Gdx.app.log(getCurrentScreenName(), "Dispose");
                 this.screen.dispose();
             }
@@ -44,8 +48,7 @@ public class ProjectTartarus extends Game {
         this.screen = screen;
         Gdx.app.log(getCurrentScreenName(), "Show");
         this.screen.show();
-        Gdx.app.log(getCurrentScreenName(), MessageFormat.format("Resize to (X: {0}, Y: {1})", Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-        this.screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override

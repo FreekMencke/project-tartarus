@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 public class Amphitheatre extends Stage {
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
-    private final Table content = new Table();
+    private final Table content;
 
     public Amphitheatre() {
         this(new SpriteBatch(), new NerdStatistics());
@@ -26,10 +26,12 @@ public class Amphitheatre extends Stage {
     public Amphitheatre(Batch batch, NerdStatistics nerdStatistics) {
         super(new ScreenViewport(), batch);
 
-        subscriptions.add(ProjectTartarus.config.subscribe(config -> setDebugAll(config.debug)));
+        subscriptions.add(ProjectTartarus.CONFIG.subscribe(config -> setDebugAll(config.debug)));
 
+        content = new Table();
         content.setFillParent(true);
         addActor(content);
+
         addActor(nerdStatistics);
     }
 
