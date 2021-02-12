@@ -42,6 +42,7 @@ public class ControllerMovementSystem extends IteratingSystem {
         Vector2 direction = new Vector2(controller.direction);
 
         applyVelocityToBody(body, direction, velocity);
+        velocity.currentSpeed = body.getLinearVelocity().len();
 
         if (controller.isTouching) rotateBodyToCursor(body, controller);
         else rotateToDirection(body, direction);
@@ -51,17 +52,17 @@ public class ControllerMovementSystem extends IteratingSystem {
         if (direction.isZero()) return;
 
         Vector2 linearVelocity = new Vector2(0, velocity.speed);
-        linearVelocity.rotate(new Vector2(direction).rotate90(-1).angle());
+        linearVelocity.rotateDeg(new Vector2(direction).rotate90(-1).angleDeg());
 
-        body.setLinearVelocity(linearVelocity);
+        body.applyForceToCenter(linearVelocity.scl(50), true);
     }
 
     private void rotateBodyToCursor(Body body, ControllerComponent controller) {
         Vector2 bodyWorldPosition = body.getPosition();
         Vector3 mouseWorldPosition = camera.unproject(new Vector3(controller.touchPosition, 0));
 
-        Vector2 relativeMousePosition = new Vector2(mouseWorldPosition.x - bodyWorldPosition.x, mouseWorldPosition.y -bodyWorldPosition.y);
-        float angle = relativeMousePosition.rotate90(-1).angle() * MathUtils.degRad;
+        Vector2 relativeMousePosition =  new Vector2(mouseWorldPosition.x - bodyWorldPosition.x, mouseWorldPosition.y -bodyWorldPosition.y);
+        float angle = relativeMousePosition.rotate90(-1).angleDeg() * MathUtils.degRad;
 
         body.setTransform(bodyWorldPosition, angle);
     }
@@ -69,7 +70,7 @@ public class ControllerMovementSystem extends IteratingSystem {
     private void rotateToDirection(Body body, Vector2 direction) {
         if (direction.equals(Vector2.Zero)) return;
 
-        body.setTransform(body.getPosition(), (direction.angle() * MathUtils.degRad) + ANGLE_OFFSET);
+        body.setTransform(body.getPosition(), (direction.angleDeg() * MathUtils.degRad) + ANGLE_OFFSET);
     }
 
 }

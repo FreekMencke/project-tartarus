@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Align;
 import io.codecomet.project_tartarus.ProjectTartarus;
 import io.codecomet.project_tartarus.entities.components.PlayerComponent;
 import io.codecomet.project_tartarus.entities.components.TransformComponent;
+import io.codecomet.project_tartarus.entities.components.VelocityComponent;
 import io.codecomet.project_tartarus.scene2d.skins.SystemSkin;
 
 import java.text.DecimalFormat;
@@ -25,12 +26,15 @@ public class NerdStatistics extends Table {
     private static final String DECIMAL_FORMAT_STR = "0.000";
 
     private Label fpsLabel;
+    private Label speedLabel;
     private Label positionLabel;
     private Label entityLabel;
 
     private final PooledEngine engine;
     private final Family playerFamily;
+
     private final ComponentMapper<TransformComponent> transformMap = ComponentMapper.getFor(TransformComponent.class);
+    private final ComponentMapper<VelocityComponent> velocityMap = ComponentMapper.getFor(VelocityComponent.class);
 
     public NerdStatistics() {
         this.engine = null;
@@ -52,6 +56,7 @@ public class NerdStatistics extends Table {
         pad(OFFSET);
 
         add(fpsLabel = new Label("", SystemSkin.getInstance())).fillX().row();
+        add(speedLabel = new Label("", SystemSkin.getInstance())).fillX().row();
         add(positionLabel = new Label("", SystemSkin.getInstance())).fillX().row();
         add(entityLabel = new Label("", SystemSkin.getInstance())).fillX().row();
     }
@@ -73,7 +78,14 @@ public class NerdStatistics extends Table {
         if (entities.size() != 0) {
             DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT_STR);
             TransformComponent transformComponent = transformMap.get(entities.first());
+            VelocityComponent velocityComponent = velocityMap.get(entities.first());
 
+            speedLabel.setText(
+                    MessageFormat.format(
+                            "Speed: {0} m/s",
+                            decimalFormat.format(velocityComponent.currentSpeed)
+                    )
+            );
             positionLabel.setText(
                 MessageFormat.format(
                     "Transform: (x: {0}, y: {1}, rot: {2}°) ",

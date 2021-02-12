@@ -22,14 +22,14 @@ public interface Pot {
         return PotBuilder.create(engine)
             .setBody(createPotBody(world, Size.DEFAULT))
             .setTexture(Size.DEFAULT)
-            .setTransform(new Vector3());
+            .setTransform(new Vector2());
     }
 
     static PotBuilder largePotBuilder(PooledEngine engine, World world) {
         return PotBuilder.create(engine)
             .setBody(createPotBody(world, Size.LARGE))
             .setTexture(Size.LARGE)
-            .setTransform(new Vector3());
+            .setTransform(new Vector2());
     }
 
     class PotBuilder {
@@ -50,21 +50,27 @@ public interface Pot {
         }
 
         public PotBuilder setBody(Body body) {
-            bodyComponent = engine.createComponent(BodyComponent.class);
+            if(bodyComponent == null) bodyComponent = engine.createComponent(BodyComponent.class);
+            else bodyComponent.reset();
+
             bodyComponent.body = body;
             return this;
         }
 
         public PotBuilder setTexture(float radius) {
-            textureComponent = engine.createComponent(TextureComponent.class);
+            if(textureComponent == null) textureComponent = engine.createComponent(TextureComponent.class);
+            else textureComponent.reset();
+
             textureComponent.region = new TextureRegion(POT_TEXTURE);
             textureComponent.size.set(radius * 2, radius * 2);
             return this;
         }
 
-        public PotBuilder setTransform(Vector3 position) {
-            transformComponent = engine.createComponent(TransformComponent.class);
-            transformComponent.position.set(position);
+        public PotBuilder setTransform(Vector2 position) {
+            if(transformComponent == null) transformComponent = engine.createComponent(TransformComponent.class);
+            else transformComponent.reset();
+
+            transformComponent.position.set(new Vector3(position, 0));
             transformComponent.rotation = MathUtils.random(MathUtils.PI2); // Random rotation
             return this;
         }
@@ -75,7 +81,7 @@ public interface Pot {
                 transformComponent.rotation
             );
 
-            VelocityComponent velocityComponent = new VelocityComponent();
+            VelocityComponent velocityComponent = engine.createComponent(VelocityComponent.class);
             velocityComponent.speedDampening = 5;
 
             return engine.createEntity()
@@ -97,6 +103,7 @@ public interface Pot {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = potShape;
         fixtureDef.density = 200;
+        fixtureDef.friction = .3f;
 
         body.createFixture(fixtureDef);
         potShape.dispose();

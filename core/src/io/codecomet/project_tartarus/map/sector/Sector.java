@@ -1,43 +1,46 @@
 package io.codecomet.project_tartarus.map.sector;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import io.codecomet.project_tartarus.entities.components.BodyComponent;
 
 public abstract class Sector implements Disposable {
 
     protected final PooledEngine engine;
     protected final World world;
 
-    protected Vector3 position = Vector3.Zero.cpy();
+    private final ComponentMapper<BodyComponent> bodyMap = ComponentMapper.getFor(BodyComponent.class);
 
-    public final ImmutableArray<Entity> entities;
+    protected Vector2 position;
+    protected float rotation;
 
-    public Sector(PooledEngine engine, World world) {
-        this.engine = engine;
-        this.world = world;
-        this.entities = new ImmutableArray<>(createEntities());
-    }
+    private ImmutableArray<Entity> entities = new ImmutableArray<>(new Array<>());
 
-    public Sector(PooledEngine engine, World world, Vector3 position) {
+    public Sector(PooledEngine engine, World world, Vector2 position, float rotation) {
         this.engine = engine;
         this.world = world;
         this.position = position;
-        this.entities = new ImmutableArray<>(createEntities());
+        this.rotation = rotation;
     }
 
     public void load() {
-        this.entities.forEach(engine::addEntity);
+        entities = new ImmutableArray<>(createEntities());
+        entities.forEach(engine::addEntity);
     }
     public void unload() {
-        this.entities.forEach(engine::removeEntity);
+        entities.forEach(e -> world.destroyBody(bodyMap.get(e).body));
+        entities.forEach(engine::removeEntity);
     }
 
     protected abstract Array<Entity> createEntities();
+
+    protected abstract Vector2 applyTransform(Vector2 position);
 
     @Override
     public void dispose() {

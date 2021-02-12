@@ -14,6 +14,7 @@ import io.codecomet.project_tartarus.entities.factories.GridEntityFactory;
 import io.codecomet.project_tartarus.entities.factories.PlayerEntityFactory;
 import io.codecomet.project_tartarus.entities.input.ControllerInputAdapter;
 import io.codecomet.project_tartarus.entities.systems.*;
+import io.codecomet.project_tartarus.map.area.Area;
 import io.codecomet.project_tartarus.map.area.TestArea;
 import io.codecomet.project_tartarus.scene2d.Amphitheatre;
 import io.codecomet.project_tartarus.scene2d.actors.NerdStatistics;
@@ -74,14 +75,10 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
     public void hide() {
@@ -117,7 +114,10 @@ public class GameScreen implements Screen {
         engine.addEntity(GridEntityFactory.create(engine)); // CREATE TEST GRID
         engine.addEntity(PlayerEntityFactory.create(engine, world)); // CREATE PLAYER
 
-        new TestArea(engine, world).load();
+        Array<Area> areas = new Array<>();
+        areas.add(new TestArea(engine, world, new Vector2()));
+        areas.add(new TestArea(engine, world, new Vector2(areas.get(0).getBoundingBox().getWidth(), 0), 0));
+        areas.forEach(Area::load);
     }
 
 }

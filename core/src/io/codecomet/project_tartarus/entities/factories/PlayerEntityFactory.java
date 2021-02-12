@@ -37,6 +37,8 @@ public class PlayerEntityFactory {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         Body body = world.createBody(bodyDef);
+        body.setFixedRotation(true);
+
 
         addHeadFixture(body);
         addShouldersFixture(body);
@@ -64,7 +66,7 @@ public class PlayerEntityFactory {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shouldersShape;
-        fixtureDef.density = 800;
+        fixtureDef.density = 1000;
         body.createFixture(fixtureDef);
 
         shouldersShape.dispose();
