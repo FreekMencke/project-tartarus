@@ -13,6 +13,7 @@ public class PlayerEntityFactory {
 
     private static final Texture PLAYER_TEXTURE = new Texture("textures/player/body.png");
 
+    public static final float FLAT_EGDE_RADIUS = .02f;
     public static final float HEAD_RADIUS = .15f; // 15cm
     public static final Vector2 SHOULDERS = new Vector2(.25f, .075f); // half-values: 50cm x 16cm
 
@@ -24,13 +25,13 @@ public class PlayerEntityFactory {
         textureComponent.size = new Vector2(SHOULDERS.x, HEAD_RADIUS).scl(2); // scl(2) because radius & half-values
 
         return engine.createEntity()
-            .add(createBodyComponent(engine, world))
-            .add(engine.createComponent(CameraComponent.class))
-            .add(engine.createComponent(ControllerComponent.class))
-            .add(engine.createComponent(TransformComponent.class))
-            .add(textureComponent)
-            .add(engine.createComponent(PlayerComponent.class))
-            .add(engine.createComponent(VelocityComponent.class));
+                .add(createBodyComponent(engine, world))
+                .add(engine.createComponent(CameraComponent.class))
+                .add(engine.createComponent(ControllerComponent.class))
+                .add(engine.createComponent(TransformComponent.class))
+                .add(textureComponent)
+                .add(engine.createComponent(PlayerComponent.class))
+                .add(engine.createComponent(VelocityComponent.class));
     }
 
     private static BodyComponent createBodyComponent(PooledEngine engine, World world) {
@@ -62,13 +63,22 @@ public class PlayerEntityFactory {
 
     private static void addShouldersFixture(Body body) {
         PolygonShape shouldersShape = new PolygonShape();
-        shouldersShape.setAsBox(SHOULDERS.x, SHOULDERS.y);
-
         FixtureDef fixtureDef = new FixtureDef();
+
+        shouldersShape.set(new Vector2[]{
+                new Vector2(-SHOULDERS.x + FLAT_EGDE_RADIUS, -SHOULDERS.y),
+                new Vector2(-SHOULDERS.x, -SHOULDERS.y + FLAT_EGDE_RADIUS),
+                new Vector2(-SHOULDERS.x, SHOULDERS.y - FLAT_EGDE_RADIUS),
+                new Vector2(-SHOULDERS.x + FLAT_EGDE_RADIUS, SHOULDERS.y),
+                new Vector2(SHOULDERS.x - FLAT_EGDE_RADIUS, SHOULDERS.y),
+                new Vector2(SHOULDERS.x, SHOULDERS.y - FLAT_EGDE_RADIUS),
+                new Vector2(SHOULDERS.x, -SHOULDERS.y + FLAT_EGDE_RADIUS),
+                new Vector2(SHOULDERS.x - FLAT_EGDE_RADIUS, -SHOULDERS.y),
+        });
+
         fixtureDef.shape = shouldersShape;
         fixtureDef.density = 1000;
         body.createFixture(fixtureDef);
-
         shouldersShape.dispose();
     }
 

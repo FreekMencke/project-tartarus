@@ -14,8 +14,7 @@ import io.codecomet.project_tartarus.entities.factories.GridEntityFactory;
 import io.codecomet.project_tartarus.entities.factories.PlayerEntityFactory;
 import io.codecomet.project_tartarus.entities.input.ControllerInputAdapter;
 import io.codecomet.project_tartarus.entities.systems.*;
-import io.codecomet.project_tartarus.map.area.Area;
-import io.codecomet.project_tartarus.map.area.TestArea;
+import io.codecomet.project_tartarus.map.district.TestDistrict;
 import io.codecomet.project_tartarus.scene2d.Amphitheatre;
 import io.codecomet.project_tartarus.scene2d.actors.NerdStatistics;
 import io.codecomet.project_tartarus.system.config.GameConfiguration;
@@ -37,6 +36,7 @@ public class GameScreen implements Screen {
 
     private ImmutableArray<EntitySystem> pausableSystems = new ImmutableArray<>(new Array<>());
     private final RenderingSystem renderingSystem = new RenderingSystem(spriteBatch);
+    private final LightingSystem lightingSystem = new LightingSystem(world, renderingSystem.getCamera());
     private final PhysicsDebugRenderingSystem physicsDebugRenderingSystem = new PhysicsDebugRenderingSystem(world, renderingSystem.getCamera());
 
     public GameScreen() {
@@ -63,8 +63,8 @@ public class GameScreen implements Screen {
         amphitheatre.act();
 
         ScreenUtils.clear(0,0,0,1);
-
         engine.update(delta);
+
         amphitheatre.draw();
     }
 
@@ -106,6 +106,7 @@ public class GameScreen implements Screen {
 
         this.pausableSystems.forEach(engine::addSystem);
         engine.addSystem(renderingSystem);
+        engine.addSystem(lightingSystem);
         engine.addSystem(physicsDebugRenderingSystem);
     }
 
@@ -114,10 +115,7 @@ public class GameScreen implements Screen {
         engine.addEntity(GridEntityFactory.create(engine)); // CREATE TEST GRID
         engine.addEntity(PlayerEntityFactory.create(engine, world)); // CREATE PLAYER
 
-        Array<Area> areas = new Array<>();
-        areas.add(new TestArea(engine, world, new Vector2()));
-        areas.add(new TestArea(engine, world, new Vector2(areas.get(0).getBoundingBox().getWidth(), 0), 0));
-        areas.forEach(Area::load);
+        new TestDistrict(engine, world, new Vector2()).load();
     }
 
 }
