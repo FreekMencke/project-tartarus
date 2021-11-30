@@ -2,8 +2,8 @@ package io.codecomet.project_tartarus.system.input;
 
 import com.badlogic.gdx.InputAdapter;
 import io.codecomet.project_tartarus.ProjectTartarus;
-import io.codecomet.project_tartarus.scene2d.Amphitheatre;
-import io.codecomet.project_tartarus.scene2d.actors.GameMenu;
+import io.codecomet.project_tartarus.screens.scene2d.Amphitheatre;
+import io.codecomet.project_tartarus.screens.scene2d.actors.GameMenu;
 import io.codecomet.project_tartarus.system.config.KeyBindings;
 
 import java.util.Arrays;

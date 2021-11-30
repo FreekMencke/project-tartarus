@@ -1,4 +1,4 @@
-package io.codecomet.project_tartarus.scene2d.actors;
+package io.codecomet.project_tartarus.screens.scene2d.actors;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
@@ -15,7 +15,7 @@ import io.codecomet.project_tartarus.ProjectTartarus;
 import io.codecomet.project_tartarus.entities.components.PlayerComponent;
 import io.codecomet.project_tartarus.entities.components.TransformComponent;
 import io.codecomet.project_tartarus.entities.components.VelocityComponent;
-import io.codecomet.project_tartarus.scene2d.skins.SystemSkin;
+import io.codecomet.project_tartarus.screens.scene2d.skins.SystemSkin;
 
 import java.text.DecimalFormat;
 import java.text.MessageFormat;

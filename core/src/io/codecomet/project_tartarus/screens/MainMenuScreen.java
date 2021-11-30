@@ -4,8 +4,8 @@ package io.codecomet.project_tartarus.screens;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.codecomet.project_tartarus.ProjectTartarus;
-import io.codecomet.project_tartarus.scene2d.Amphitheatre;
-import io.codecomet.project_tartarus.scene2d.actors.MainMenu;
+import io.codecomet.project_tartarus.screens.scene2d.Amphitheatre;
+import io.codecomet.project_tartarus.screens.scene2d.actors.MainMenu;
 import io.codecomet.project_tartarus.system.config.GameConfiguration;
 
 public class MainMenuScreen implements Screen {

@@ -1,4 +1,4 @@
-package io.codecomet.project_tartarus.scene2d.actors;
+package io.codecomet.project_tartarus.screens.scene2d.actors;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import io.codecomet.project_tartarus.ProjectTartarus;
-import io.codecomet.project_tartarus.scene2d.skins.SystemSkin;
+import io.codecomet.project_tartarus.screens.scene2d.skins.SystemSkin;
 import io.codecomet.project_tartarus.screens.MainMenuScreen;
 import io.codecomet.project_tartarus.system.config.TranslationDictionary;
 

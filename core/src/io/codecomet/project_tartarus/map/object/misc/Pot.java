@@ -82,7 +82,7 @@ public interface Pot {
             );
 
             VelocityComponent velocityComponent = engine.createComponent(VelocityComponent.class);
-            velocityComponent.speedDampening = 5;
+            velocityComponent.speedDampening = 8;
 
             return engine.createEntity()
                 .add(bodyComponent)

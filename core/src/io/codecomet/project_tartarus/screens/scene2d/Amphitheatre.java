@@ -1,4 +1,4 @@
-package io.codecomet.project_tartarus.scene2d;
+package io.codecomet.project_tartarus.screens.scene2d;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.codecomet.project_tartarus.ProjectTartarus;
-import io.codecomet.project_tartarus.scene2d.actors.NerdStatistics;
+import io.codecomet.project_tartarus.screens.scene2d.actors.NerdStatistics;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 /**

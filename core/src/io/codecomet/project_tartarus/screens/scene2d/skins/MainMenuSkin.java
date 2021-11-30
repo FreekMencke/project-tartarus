@@ -1,4 +1,4 @@
-package io.codecomet.project_tartarus.scene2d.skins;
+package io.codecomet.project_tartarus.screens.scene2d.skins;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;

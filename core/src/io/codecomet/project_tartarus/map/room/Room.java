@@ -3,6 +3,7 @@ package io.codecomet.project_tartarus.map.room;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import io.codecomet.project_tartarus.map.area.Area;
 import io.codecomet.project_tartarus.utils.Matrix;
@@ -41,17 +42,27 @@ public abstract class Room implements Disposable {
         this.createAreas(areas);
         areas.getAllElements().forEach(element -> {
             // Rotate element position around room center (offset  for bottom-left coordinate area), then add room position.
-            element.value.position.set(element.position.cpy().rotateAroundDeg(halfSize().sub(.5f,.5f), rotation).add(position));
+            element.value.position.set(element.position.cpy().rotateAroundDeg(halfSize().sub(.5f, .5f), rotation).add(position));
             element.value.rotation = rotation; // Set area rotation to the room's rotation.
             element.value.load();
         });
     }
+
     public void unload() {
         areas.getAllElements().forEach(e -> e.value.unload());
         this.areas = new Matrix<>(roomSize.value);
     }
 
-    public Vector2 halfSize() {
+    public Array<Vector2> getCornerCoords() {
+        return new Array<>(new Vector2[]{
+                new Vector2().rotateAroundDeg(halfSize(), rotation).add(position),
+                new Vector2(0, roomSize.value).rotateAroundDeg(halfSize(), rotation).add(position),
+                new Vector2(roomSize.value, roomSize.value).rotateAroundDeg(halfSize(), rotation).add(position),
+                new Vector2(roomSize.value, 0).rotateAroundDeg(halfSize(), rotation).add(position),
+        });
+    }
+
+    protected Vector2 halfSize() {
         return new Vector2(roomSize.value, roomSize.value).scl(.5f);
     }
 
