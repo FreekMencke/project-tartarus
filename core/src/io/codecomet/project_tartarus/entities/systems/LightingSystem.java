@@ -21,7 +21,8 @@ public class LightingSystem extends IteratingSystem {
         RayHandler.setGammaCorrection(true);
         RayHandler.useDiffuseLight(true);
         rayHandler = new RayHandler(world);
-        rayHandler.setShadows(false); // TODO enable when doing stuff
+        rayHandler.setShadows(true);
+        rayHandler.setAmbientLight(1,1,1,1);
     }
 
     @Override
@@ -31,7 +32,8 @@ public class LightingSystem extends IteratingSystem {
     }
 
     @Override
-    protected void processEntity(Entity entity, float deltaTime) { }
+    protected void processEntity(Entity entity, float deltaTime) {
+    }
 
     public RayHandler getRayHandler() {
         return this.rayHandler;
