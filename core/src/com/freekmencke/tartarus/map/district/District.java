@@ -11,6 +11,7 @@ import com.freekmencke.tartarus.entities.components.BodyComponent;
 import com.freekmencke.tartarus.entities.factories.EdgeEntityFactory;
 import com.freekmencke.tartarus.map.room.Room;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class District {
@@ -51,7 +52,7 @@ public abstract class District {
     protected abstract Array<Room> createRooms();
 
     protected Array<Entity> createWalls() {
-        Array<Vector2[]> vertices = new Array<>();
+        ArrayList<Vector2[]> vertices = new ArrayList<>();
 
         rooms.forEach(room -> {
             Array<Vector2> corners = room.getCornerCoords();
@@ -63,8 +64,8 @@ public abstract class District {
 
         Array<Entity> walls = new Array<>();
 
-        Arrays.stream(vertices.toArray()).filter(vert -> {
-            long count = Arrays.stream(vertices.toArray())
+        Arrays.stream(vertices.toArray(Vector2[][]::new)).filter(vert -> {
+            long count = Arrays.stream(vertices.toArray(Vector2[][]::new))
                     .filter(innerVert -> vert[0].equals(innerVert[0]) && vert[1].equals(innerVert[1]) || vert[1].equals(innerVert[0]) && vert[0].equals(innerVert[1]))
                     .count();
             return count == 1;
