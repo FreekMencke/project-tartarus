@@ -1,31 +1,37 @@
 package com.freekmencke.tartarus.map.room;
 
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.freekmencke.tartarus.entities.components.BodyComponent;
+import com.freekmencke.tartarus.entities.factories.EdgeEntityFactory;
 import com.freekmencke.tartarus.map.area.Area;
-import com.freekmencke.tartarus.utils.Matrix;
 
 public abstract class Room implements Disposable {
 
     public enum RoomSize {
         SMALL(2), MEDIUM(3), LARGE(4), ENORMOUS(6), GIGANTIC(8);
-
-        int value;
+        final int value;
 
         RoomSize(int numVal) {
             this.value = numVal;
         }
     }
 
+    private final ComponentMapper<BodyComponent> bodyMap = ComponentMapper.getFor(BodyComponent.class);
+
     protected final PooledEngine engine;
     protected final World world;
 
     protected RoomSize roomSize;
+    private ImmutableArray<Area> areas;
+    private Entity walls;
 
-    private Matrix<Area> areas;
     protected Vector2 position;
     protected float rotation;
 
@@ -33,40 +39,50 @@ public abstract class Room implements Disposable {
         this.engine = engine;
         this.world = world;
         this.roomSize = roomSize;
-        this.areas = new Matrix<>(roomSize.value);
         this.position = position;
         this.rotation = rotation;
     }
 
     public void load() {
-        this.createAreas(areas);
-        areas.getAllElements().forEach(element -> {
-            // Rotate element position around room center (offset  for bottom-left coordinate area), then add room position.
-            element.value.position.set(element.position.cpy().rotateAroundDeg(halfSize().sub(.5f, .5f), rotation).add(position));
-            element.value.rotation = rotation; // Set area rotation to the room's rotation.
-            element.value.load();
-        });
+        areas = new ImmutableArray<>(this.createAreas());
+        areas.forEach(Area::load);
+
+        walls = this.createWalls();
+        engine.addEntity(walls);
     }
 
     public void unload() {
-        areas.getAllElements().forEach(e -> e.value.unload());
-        this.areas = new Matrix<>(roomSize.value);
+        areas.forEach(Area::unload);
+
+        world.destroyBody(bodyMap.get(walls).body);
+        engine.removeEntity(walls);
     }
 
-    public Array<Vector2> getCornerCoords() {
-        return new Array<>(new Vector2[]{
-                new Vector2().rotateAroundDeg(halfSize(), rotation).add(position),
-                new Vector2(0, roomSize.value).rotateAroundDeg(halfSize(), rotation).add(position),
-                new Vector2(roomSize.value, roomSize.value).rotateAroundDeg(halfSize(), rotation).add(position),
-                new Vector2(roomSize.value, 0).rotateAroundDeg(halfSize(), rotation).add(position),
-        });
+    public Vector2[] getRelativeCornerCoords() {
+        return new Vector2[]{
+                new Vector2().sub(halfSize()),
+                new Vector2(0, roomSize.value).sub(halfSize()),
+                new Vector2(roomSize.value, roomSize.value).sub(halfSize()),
+                new Vector2(roomSize.value, 0).sub(halfSize()),
+        };
     }
 
     protected Vector2 halfSize() {
         return new Vector2(roomSize.value, roomSize.value).scl(.5f);
     }
 
-    protected abstract void createAreas(Matrix<Area> matrix);
+    protected abstract Array<Area> createAreas();
+
+    private Entity createWalls() {
+        return EdgeEntityFactory.create(engine, world, getRelativeCornerCoords(), position, rotation, true);
+    }
+
+    protected Vector2 applyRoomTransformToArea(Vector2 position) {
+        return position
+                .sub(halfSize()) // move center of room to 0, 0
+                .rotateAroundDeg(new Vector2(-.5f, -.5f), this.rotation) // remove area offset
+                .add(this.position); // add absolute room position
+    }
 
     @Override
     public void dispose() {

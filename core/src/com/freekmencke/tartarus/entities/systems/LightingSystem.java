@@ -4,6 +4,7 @@ import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
 import com.freekmencke.tartarus.entities.components.BodyComponent;
@@ -22,7 +23,6 @@ public class LightingSystem extends IteratingSystem {
         RayHandler.useDiffuseLight(true);
         rayHandler = new RayHandler(world);
         rayHandler.setShadows(true);
-        rayHandler.setAmbientLight(1,1,1,1);
     }
 
     @Override
@@ -35,8 +35,7 @@ public class LightingSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
     }
 
-    public RayHandler getRayHandler() {
-        return this.rayHandler;
+    public void setAmbientLight(Color color) {
+        this.rayHandler.setAmbientLight(color);
     }
-
 }

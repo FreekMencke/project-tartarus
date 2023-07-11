@@ -113,9 +113,9 @@ public class GameScreen implements Screen {
     /** Create game world. */
     private void loadWorld() {
         engine.addEntity(GridEntityFactory.create(engine)); // CREATE TEST GRID
-        engine.addEntity(PlayerEntityFactory.create(engine, world)); // CREATE PLAYER
+        engine.addEntity(PlayerEntityFactory.create(engine, world, new Vector2(), 0)); // CREATE PLAYER
 
-        new TestDistrict(engine, world, new Vector2()).load();
+        new TestDistrict(engine, world).load();
     }
 
 }

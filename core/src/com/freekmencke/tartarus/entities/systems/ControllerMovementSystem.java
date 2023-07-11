@@ -61,8 +61,8 @@ public class ControllerMovementSystem extends IteratingSystem {
         Vector2 bodyWorldPosition = body.getPosition();
         Vector3 mouseWorldPosition = camera.unproject(new Vector3(controller.touchPosition, 0));
 
-        Vector2 relativeMousePosition =  new Vector2(mouseWorldPosition.x - bodyWorldPosition.x, mouseWorldPosition.y -bodyWorldPosition.y);
-        float angle = relativeMousePosition.rotate90(-1).angleDeg() * MathUtils.degRad;
+        Vector2 relativeMousePosition =  new Vector2(mouseWorldPosition.x - bodyWorldPosition.x, mouseWorldPosition.y - bodyWorldPosition.y);
+        float angle = relativeMousePosition.rotate90(-1).angleRad();
 
         body.setTransform(bodyWorldPosition, angle);
     }
@@ -70,7 +70,7 @@ public class ControllerMovementSystem extends IteratingSystem {
     private void rotateToDirection(Body body, Vector2 direction) {
         if (direction.equals(Vector2.Zero)) return;
 
-        body.setTransform(body.getPosition(), (direction.angleDeg() * MathUtils.degRad) + ANGLE_OFFSET);
+        body.setTransform(body.getPosition(), direction.angleRad() + ANGLE_OFFSET);
     }
 
 }
