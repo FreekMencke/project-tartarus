@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.freekmencke.tartarus.entities.components.BodyComponent;
 import com.freekmencke.tartarus.entities.factories.EdgeEntityFactory;
 import com.freekmencke.tartarus.map.area.Area;
+import com.freekmencke.tartarus.map.util.Line;
 
 public abstract class Room implements Disposable {
 
@@ -30,7 +31,8 @@ public abstract class Room implements Disposable {
 
     protected RoomSize roomSize;
     private ImmutableArray<Area> areas;
-    private Entity walls;
+    private ImmutableArray<Entity> walls;
+    private final Array<Line> doors;
 
     protected Vector2 position;
     protected float rotation;
@@ -41,21 +43,27 @@ public abstract class Room implements Disposable {
         this.roomSize = roomSize;
         this.position = position;
         this.rotation = rotation;
+        this.doors = new Array<>();
+    }
+
+    public Room addDoor(Vector2 position, Vector2 vector) {
+        doors.add(new Line(position.scl(halfSize()), vector.add(position)));
+        return this;
     }
 
     public void load() {
         areas = new ImmutableArray<>(this.createAreas());
         areas.forEach(Area::load);
 
-        walls = this.createWalls();
-        engine.addEntity(walls);
+        walls =  new ImmutableArray<>(this.createWalls());
+        walls.forEach(engine::addEntity);
     }
 
     public void unload() {
         areas.forEach(Area::unload);
 
-        world.destroyBody(bodyMap.get(walls).body);
-        engine.removeEntity(walls);
+        walls.forEach(wall -> world.destroyBody(bodyMap.get(wall).body));
+        walls.forEach(engine::removeEntity);
     }
 
     public Vector2[] getRelativeCornerCoords() {
@@ -73,8 +81,15 @@ public abstract class Room implements Disposable {
 
     protected abstract Array<Area> createAreas();
 
-    private Entity createWalls() {
-        return EdgeEntityFactory.create(engine, world, getRelativeCornerCoords(), position, rotation, true);
+    private Array<Entity> createWalls() {
+        Array<Entity> walls = new Array<>();
+        Vector2[] corners = this.getRelativeCornerCoords();
+
+        for (int i = 1; i <= corners.length; i++) {
+            new Line(corners[i - 1], corners[i == corners.length ? 0 : i]).subtractLines(doors).forEach(l -> walls.add(EdgeEntityFactory.create(engine, world, l.getVertices(), position, rotation, false)));
+        }
+
+        return walls;
     }
 
     protected Vector2 applyRoomTransformToArea(Vector2 position) {

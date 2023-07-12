@@ -1,13 +1,12 @@
 package com.freekmencke.tartarus.entities.systems;
 
 import box2dLight.RayHandler;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
-import com.freekmencke.tartarus.entities.components.BodyComponent;
 import com.freekmencke.tartarus.entities.components.TransformComponent;
 
 public class LightingSystem extends IteratingSystem {
@@ -16,7 +15,7 @@ public class LightingSystem extends IteratingSystem {
     private final OrthographicCamera camera;
 
     public LightingSystem(World world, OrthographicCamera camera) {
-        super(Family.all(BodyComponent.class, TransformComponent.class).get());
+        super(Family.all(TransformComponent.class).get());
         this.camera = camera;
 
         RayHandler.setGammaCorrection(true);
@@ -35,7 +34,13 @@ public class LightingSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
     }
 
-    public void setAmbientLight(Color color) {
-        this.rayHandler.setAmbientLight(color);
+    public RayHandler getRayHandler() {
+        return this.rayHandler;
+    }
+
+    @Override
+    public void removedFromEngine(Engine engine) {
+        super.removedFromEngine(engine);
+        rayHandler.dispose();
     }
 }

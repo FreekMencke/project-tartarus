@@ -25,7 +25,6 @@ public class PlayerCameraSystem extends IteratingSystem {
         this.camera = camera;
     }
 
-
     /**
      * Since the physics system uses fixed steps, we need to update our camera in fixed steps as well.
      */

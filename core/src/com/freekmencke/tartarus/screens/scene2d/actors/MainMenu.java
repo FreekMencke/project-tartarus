@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.freekmencke.tartarus.TartarusGame;
-import com.freekmencke.tartarus.screens.scene2d.skins.MainMenuSkin;
 import com.freekmencke.tartarus.screens.GameScreen;
 import com.freekmencke.tartarus.screens.SettingsScreen;
+import com.freekmencke.tartarus.screens.scene2d.skins.MainMenuSkin;
 import com.freekmencke.tartarus.system.config.TranslationDictionary;
 
 public class MainMenu extends Table {

@@ -92,8 +92,10 @@ public class GameScreen implements Screen {
         subscriptions.dispose();
         engine.removeAllEntities();
         engine.clearPools();
+        engine.removeAllSystems();
         world.dispose();
         amphitheatre.dispose();
+        spriteBatch.dispose();
     }
 
     /** Add order is important. Systems will be run in the order they are added. */

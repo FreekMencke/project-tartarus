@@ -34,7 +34,7 @@ public abstract class District {
 
     public void load() {
         // use Theme to load specific ambient light
-        this.engine.getSystem(LightingSystem.class).setAmbientLight(this.theme.ambientLight);
+        engine.getSystem(LightingSystem.class).getRayHandler().setAmbientLight(this.theme.ambientLight);
 
         rooms = new ImmutableArray<>(createRooms());
         rooms.forEach(Room::load);
